@@ -73,8 +73,7 @@ void Controller::move(Colour colour) {
 }
 
 // Resigns game
-void Controller::resign(Colour colour) noexcept {  
-   // b->resign(colour);  
+void Controller::resign(Colour colour) noexcept {
     if (colour == Colour::White) {
         cout << "Black";
         ++blackScore;;
@@ -86,14 +85,13 @@ void Controller::resign(Colour colour) noexcept {
 }
 
 // Called when checkmate occurs
-void Controller::checkmate(Colour colour) {
-    //b->checkmate(colour);
+void Controller::checkmate(Colour colour) noexcept {
     cout << "Checkmate! ";
     if (colour == Colour::Black) {
-	cout << "Black";
+	    cout << "Black";
         ++blackScore; 
     } else {
-	cout << "White";
+	    cout << "White";
         ++whiteScore;
     }
     cout << " wins!" << endl;

@@ -13,12 +13,12 @@ class Controller {
 
 public:
     Controller(bool graphics);
-    void startGame(unsigned);
+    void startGame(unsigned seed);
     void init();
-    void initPlayers(unsigned);
+    void initPlayers(unsigned seed);
     void move(Colour colour);
     void resign(Colour colour) noexcept;
-    void checkmate(Colour colour);
+    void checkmate(Colour colour) noexcept;
     void draw() noexcept;
     void setup(Colour &colour);
     void undo(Colour colour);

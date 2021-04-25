@@ -38,7 +38,7 @@ public:
 
 template <typename InfoType, typename StateType>
 void Subject<InfoType, StateType>::attach(Observer<InfoType, StateType> *o) {
-    if(std::find(observers.begin(), observers.end(), o) != observers.end()) return;
+    if (std::find(observers.begin(), observers.end(), o) != observers.end()) return;
     observers.emplace_back(o);
 }
 
@@ -54,9 +54,9 @@ void Subject<InfoType, StateType>::setState(StateType newS) {
 }
 
 template <typename InfoType, typename StateType>
-void Subject<InfoType, StateType>::detach( Observer<InfoType, StateType> *o ) {
-  for ( auto it = observers.begin(); it != observers.end(); ++it ) {
-    if ( *it == o ) {
+void Subject<InfoType, StateType>::detach( Observer<InfoType, StateType> *o) {
+  for (auto it = observers.begin(); it != observers.end(); ++it) {
+    if (*it == o) {
       observers.erase(it);
       break;
     }

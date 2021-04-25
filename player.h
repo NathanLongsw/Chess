@@ -16,7 +16,7 @@ class Player {
   public:
     Player(Board *Board, Colour colour);
     virtual ~Player();
-    virtual void play() = 0; //pure virtual
+    virtual void play() = 0;
 };
 
 #endif

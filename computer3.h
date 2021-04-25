@@ -3,7 +3,7 @@
 #include "computer2.h"
 
 class Computer3: public Computer2 {
-    bool positionatRisk(int row, int col);
+    bool positionatRisk(int row, int col) noexcept;
 
 public:
     Computer3(Board *gameboard, Colour colour, unsigned);

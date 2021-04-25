@@ -1,7 +1,6 @@
 #ifndef _PLAYERMOVE_H
 #define _PLAYERMOVE_H
 #include <memory>
-#include "piece.h"
 #include "state.h"
 
 struct Position {

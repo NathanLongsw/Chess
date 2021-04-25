@@ -7,7 +7,7 @@ class Board;
 
 class Computer2: public Computer1 {
 protected:
-    Colour getEnemyColour();
+    Colour getEnemyColour() const noexcept;
     void playCapture();
 public:
     Computer2(Board* gameboard, Colour colour, unsigned);

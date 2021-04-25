@@ -7,7 +7,7 @@ Computer3::Computer3(Board *gameboard, Colour colour, unsigned int seed): Comput
 
 Computer3::~Computer3() {}
 
-bool Computer3::positionatRisk(int row, int col) {
+bool Computer3::positionatRisk(int row, int col) noexcept {
     Colour enemy = getEnemyColour();
     for (const auto &v: pieces) {
         for (const auto &p : v) {

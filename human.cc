@@ -10,8 +10,7 @@ Human::~Human() {}
 void Human::play() {
     char fromx, newx;
     int fromy, newy;
-    //get user input
-    //assumes that move command has already been read.
+    
     while (true) {
         cin >> fromx >> fromy >> newx >> newy;
         if (cin.fail()) {

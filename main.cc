@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
                 }
                 setupStarted = false;
                 inProgress = true;
-                if(whoseMove == Colour::NoColour) whoseMove = Colour::White; 
+                if (whoseMove == Colour::NoColour) whoseMove = Colour::White; 
             }
             else if (cmd == "setup") {
                 if (inProgress) {

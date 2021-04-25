@@ -11,7 +11,7 @@ Computer2::Computer2(Board *gameboard, Colour Colour, unsigned int seed) : Compu
 Computer2::~Computer2() {}
 
 
-Colour Computer2::getEnemyColour() {
+Colour Computer2::getEnemyColour() const noexcept {
     Colour col = Colour::NoColour;
     colour == Colour::White ? col = Colour::Black : col = Colour::White;
     return col;

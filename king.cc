@@ -1,22 +1,16 @@
-#include <cstdlib>
-#include <iostream>
 #include "king.h"
+using namespace std;
 
-King::King(size_t r, size_t c, Colour col)
-{
+King::King(size_t r, size_t c, Colour col) {
     getRow() = r;
     getCol() = c;
     getColour() = col;
     getRank() = Rank::k;
 }
 
-void King::move(size_t r, size_t c)
-{
-    try
-    {
-        if (r == getInfo().row && c == getInfo().col)
-        {
-
+void King::move(size_t r, size_t c) {
+    try {
+        if (r == getInfo().row && c == getInfo().col) {
             setState(State{StateType::Check, getInfo().colour, r, c, getInfo().rank});
             notifyObservers();
             setState(State{StateType::Standing, getInfo().colour, r, c, getInfo().rank});
@@ -25,13 +19,11 @@ void King::move(size_t r, size_t c)
 
         else if ((first && abs_diff(getInfo().col, c) == 2 && getInfo().row - r == 0) &&
                  ((getColour() == Colour::White && getRow() == 0) ||
-                  (getColour() == Colour::Black && getRow() == 7)))
-        {
+                  (getColour() == Colour::Black && getRow() == 7))) {
             setState(State{StateType::Castling, getInfo().colour, r, c, getInfo().rank});
             notifyObservers();
         }
-        else
-        {
+        else {
             if (abs_diff(getInfo().col, c) > 1 || abs_diff(getInfo().row, r) > 1)
                 throw InvalidMoveException();
             setState(State{StateType::Moving, getInfo().colour, r, c, getInfo().rank});
@@ -41,22 +33,19 @@ void King::move(size_t r, size_t c)
             notifyObservers();
         }
     }
-    catch (...)
-    {
+    catch (...) {
         setState(State{StateType::Standing, getInfo().colour, r, c, getInfo().rank});
         throw;
     }
 }
 
-void King::check(size_t r, size_t c)
-{
+void King::check(size_t r, size_t c) {
     Colour op = getInfo().colour == Colour::White ? Colour::Black : Colour::White;
     if (abs_diff(r, getInfo().row) <= 1 && abs_diff(c, getInfo().col) <= 1)
         throw checkException(op, getInfo().row, getInfo().col, getInfo().rank);
 }
 
-vector<pair<int, int>> King::generateMoves()
-{
+vector<pair<int, int>> King::generateMoves() {
     size_t r = getRow();
     size_t c = getCol();
     vector<pair<int, int>> ret;
@@ -76,8 +65,7 @@ vector<pair<int, int>> King::generateMoves()
         ret.push_back({r, c + 1});
     if (c - 1 >= 0)
         ret.push_back({r, c - 1});
-    if (first && ((r == 0 || r == 7) && c == 4))
-    {
+    if (first && ((r == 0 || r == 7) && c == 4)) {
         ret.push_back({r, c + 2});
         ret.push_back({r, c - 2});
     }

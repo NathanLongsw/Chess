@@ -1,8 +1,7 @@
 #include "blank.h"
-#include <iostream>
+using namespace std;
 
-Blank::Blank(size_t r, size_t c) 
- {
+Blank::Blank(size_t r, size_t c) {
      getRow() = r;
      getCol() = c; 
      getRank() = Rank::blank; 
@@ -11,4 +10,14 @@ Blank::Blank(size_t r, size_t c)
      setState(State{StateType::Standing, Colour::NoColour, r, c, Rank::blank});
 }
 
-vector<pair<int, int>> Blank::generateMoves() { return vector<pair<int, int>>(); }
+virtual void move(size_t r, size_t c) { 
+    return;
+}
+
+virtual void check(size_t r, size_t c) {
+    return;
+}
+
+vector<pair<int, int>> Blank::generateMoves() {
+    return vector<pair<int, int>>();
+}

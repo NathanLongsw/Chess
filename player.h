@@ -9,7 +9,6 @@ class Board;
 
 enum class PlayerType {Human, C1, C2, C3, C4 };
 
-
 class Player {
   protected:
     Colour colour;
@@ -17,9 +16,7 @@ class Player {
   public:
     Player(Board *Board, Colour colour);
     virtual ~Player();
-
     virtual void play() = 0; //pure virtual
 };
-
 
 #endif

@@ -4,10 +4,9 @@
 #include "piece.h"
 #include <stdlib.h>
 
-class ComputerMoveException{};
 class Board;
 
-class Computer1: public Player{
+class Computer1: public Player {
 protected:
     std::vector<std::vector<std::shared_ptr<Piece>>> pieces;
     unsigned int seed;
@@ -19,7 +18,5 @@ public:
     virtual ~Computer1();
     virtual void play() override;
 };
-
-
 
 #endif

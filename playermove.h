@@ -4,23 +4,13 @@
 #include "piece.h"
 #include "state.h"
 
-
-struct Position{
+struct Position {
     char col;
     size_t row;
-    bool operator==(const Position &other){
-        return other.row == row && other.col == col;
-    }
-    bool operator!=(const Position &other){
-        return !(*this == other);
-    }
     Position(char c, size_t r) : col{c}, row{r} {}
 };
 
-
-
-
-class PlayerMove final{
+class PlayerMove {
 private:
     Position fromPos;
     Position toPos;

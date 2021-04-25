@@ -12,9 +12,9 @@
    and its colour.
 
    State is for the parts of the subject that, when changed, trigger
-   notifications.  This is the information that the Observer "gets" when it
-   calls getState on the subject.  It comprises the type of state, a direction,
-   and a colour.  For more details, see state.h.
+   notifications. This is the information that the Observer "gets" when it
+   calls getState on the subject.  It comprises the type of state, rank, position,
+   and a colour. For more details, see state.h.
 */
 
 template <typename InfoType, typename StateType>
@@ -67,4 +67,5 @@ template <typename InfoType, typename StateType>
 StateType Subject<InfoType, StateType>::getState() const {
     return state;
 }
+
 #endif

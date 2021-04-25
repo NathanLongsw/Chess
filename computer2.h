@@ -5,7 +5,7 @@
 
 class Board;
 
-class Computer2: public Computer1{
+class Computer2: public Computer1 {
 protected:
     Colour getEnemyColour();
     void playCapture();

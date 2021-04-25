@@ -1,36 +1,28 @@
 #include <iostream>
 #include "human.h"
 #include "board.h"
-// HUMAN PLAYER METHODS
+using namespace std;
 
-class Board;
+Human::Human(Board *gameboard, Colour colour): Player{gameboard, colour} {}
 
-Human::Human(Board *gameboard, Colour colour): Player{gameboard, colour} {
+Human::~Human() {}
 
-}
-
-Human::~Human(){
-
-}
-
-void Human::play(){
-    char fromx;
-    int fromy;
-    char newx;
-    int newy;
+void Human::play() {
+    char fromx, newx;
+    int fromy, newy;
     //get user input
     //assumes that move command has already been read.
-    while(true){
-        std::cin >> fromx >> fromy >> newx >> newy;
-        if(std::cin.fail()){
-            if(std::cin.eof()){
+    while (true) {
+        cin >> fromx >> fromy >> newx >> newy;
+        if (cin.fail()) {
+            if (cin.eof()) {
                 return ;
-            }else{
-                std::cin.clear();
-                std::cin.ignore();
-                std::cerr << "Incorrect Input Format. Try again!" << std::endl;
+            } else {
+                cin.clear();
+                cin.ignore();
+                cerr << "Incorrect Input Format. Try again!" << endl;
             }
-        }else{
+        } else {
             break;
         }
     }

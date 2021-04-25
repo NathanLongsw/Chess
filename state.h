@@ -14,6 +14,7 @@
 
     Check -- A testing state, making sure no piece is between me and the king
 */
+
 enum class StateType { NewPiece, Castling, Moving, Standing, Check};
 enum class Colour { NoColour, Black, White };
 enum class Rank { p, r, n, b, k, q, blank };

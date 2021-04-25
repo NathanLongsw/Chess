@@ -4,7 +4,7 @@
 
 class Board;
 
-class Human: public Player{
+class Human: public Player {
   public:
     Human(Board *gameboard, Colour colour);
     virtual ~Human();

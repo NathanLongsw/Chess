@@ -47,7 +47,7 @@ void Computer3::play() {
                     return;
                 } catch (InvalidMoveException) {
                         continue;
-                } catch (checkException) {
+                } catch (checkException &c) {
                     // try another move if current move puts you in check
                     if (c.getColour() == colour) continue;
                     else {

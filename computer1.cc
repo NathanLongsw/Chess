@@ -38,14 +38,14 @@ void Computer1::playRandom() {
         int randidx = 0;
         // shuffle vector 100 times to improve randomess
         for (int z = 0; z < 200; z++) {
-            std::shuffle(mypieces.begin(), mypieces.end(), rng);
+            shuffle(mypieces.begin(), mypieces.end(), rng);
         }
         cpiece = mypieces[randidx];
         //return valid moves for this piece
-        std::vector<std::pair<int, int>> validmoves = cpiece->generateMoves();
+        vector<pair<int, int>> validmoves = cpiece->generateMoves();
         //shuffle moves
         for( int z = 0; z < 10; z++) {
-            std::shuffle(validmoves.begin(), validmoves.end(), rng);
+            shuffle(validmoves.begin(), validmoves.end(), rng);
         }
         //index not already seen, so try to play move
         for (const auto &p : validmoves) {

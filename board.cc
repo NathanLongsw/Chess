@@ -130,7 +130,7 @@ void Board::init()
     if (graphics) gd = make_shared<GraphicsDisplay>();
 	for (size_t i = 0; i < 8; i++)
 	{
-		vector<std::shared_ptr<Piece>> row;
+		vector<shared_ptr<Piece>> row;
 		for (size_t j = 0; j < 8; j++)
 		{
 			row.emplace_back(make_shared<Blank>(i, j));

@@ -11,8 +11,8 @@ Computer2::Computer2(Board *gameboard, Colour Colour, unsigned int seed) : Compu
 Computer2::~Computer2() {}
 
 
-Colour Computer2::getEnemyColour(){
-    icolour == Colour::White ? return Colour::Black : return Colour::White;
+Colour Computer2::getEnemyColour() {
+    colour == Colour::White ? return Colour::Black : return Colour::White;
 }
 
 void Computer2::playCapture() {
@@ -22,7 +22,7 @@ void Computer2::playCapture() {
     for (int r = 0; r < 8; r++) {
         for (int c = 0; c < 8; c++) {
             if (pieces[r][c]->getColour() == enemycolour) {
-                enemyloc.push_back(std::make_pair(r, c));
+                enemyloc.push_back(make_pair(r, c));
             }
         }
     }

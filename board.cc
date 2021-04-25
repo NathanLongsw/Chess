@@ -535,12 +535,14 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 		passCol = toCol - 'a';
         pieces[passRow][passCol]->getPass() = true;
 	}
-	    //Reset old pass and move to impossible position
-	    if ((passCol > 0 && passCol < 9) && !((passRow == toRow-2 || passRow == toRow ) && passCol == toCol - 'a')) {
-		    pieces[passRow][passCol]->getPass() = false;
-		    passRow = 10;
-		    passCol = 10;
-	    }
+    
+    size_t toRowPass = static_cast<size_t>(toRow - 2);
+	//Reset old pass and move to impossible position
+    if ((passCol > 0 && passCol < 9) && !((passRow == toRowPass || passRow == toRow ) && passCol == toColAdj)) {
+        pieces[passRow][passCol]->getPass() = false;
+        passRow = 10;
+        passCol = 10;
+    }
 	try {
 		if (wCheck) {
 			pieces[wRow][wCol]->move(wRow, wCol);

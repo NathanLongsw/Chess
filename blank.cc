@@ -10,11 +10,11 @@ Blank::Blank(size_t r, size_t c) {
      setState(State{StateType::Standing, Colour::NoColour, r, c, Rank::blank});
 }
 
-virtual void move(size_t r, size_t c) { 
+void move(size_t r, size_t c) { 
     return;
 }
 
-virtual void check(size_t r, size_t c) {
+void check(size_t r, size_t c) {
     return;
 }
 

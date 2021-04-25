@@ -168,26 +168,26 @@ Info Piece::getInfo() const noexcept {
     return Info{row, col, colour, rank};
 }
 
-size_t &getRow() noexcept {
+size_t & Piece::getRow() noexcept {
     return row;
 }
 
-size_t &getCol() noexcept {
+size_t & Piece::getCol() noexcept {
     return col;
 }
 
-bool &getFirst() noexcept {
+bool & Piece::getFirst() noexcept {
     return first;
 }
 
-bool &getPass() noexcept {
+bool & Piece::getPass() noexcept {
     return pass;
 }
 
-Rank &getRank() noexcept {
+Rank & Piece::getRank() noexcept {
     return rank;
 }
 
-Colour &getColour() noexcept {
+Colour & Piece::getColour() noexcept {
     return colour;
 }

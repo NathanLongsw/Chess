@@ -22,7 +22,7 @@ public:
     GraphicsDisplay(size_t dimension = 500);
     ~GraphicsDisplay();
     void notify(Subject<Info, State> &whoNotified) override;
-    void drawGraphics();
+    void drawGraphics() noexcept;
 
 };
 

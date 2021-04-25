@@ -82,7 +82,7 @@ void GraphicsDisplay::notify( Subject<Info, State> & whoNotified) {
     }
 }
 
-void GraphicsDisplay::drawGraphics() {
+void GraphicsDisplay::drawGraphics() noexcept {
     string oldicon;
     string newicon;
     for (int y = 0; y < 8; y++) {

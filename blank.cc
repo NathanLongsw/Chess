@@ -18,6 +18,6 @@ virtual void check(size_t r, size_t c) {
     return;
 }
 
-vector<pair<int, int>> Blank::generateMoves() {
+vector<pair<int, int>> Blank::generateMoves() noexcept {
     return vector<pair<int, int>>();
 }

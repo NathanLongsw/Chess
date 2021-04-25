@@ -45,7 +45,7 @@ void King::check(size_t r, size_t c) {
         throw checkException(op, getInfo().row, getInfo().col, getInfo().rank);
 }
 
-vector<pair<int, int>> King::generateMoves() {
+vector<pair<int, int>> King::generateMoves() noexcept {
     size_t r = getRow();
     size_t c = getCol();
     vector<pair<int, int>> ret;

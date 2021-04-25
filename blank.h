@@ -8,7 +8,7 @@ class Blank : public Piece {
     Blank(size_t r, size_t c);
     virtual void move(size_t r, size_t c);
     virtual void check(size_t r, size_t c);
-    virtual std::vector<std::pair<int, int>> generateMoves();
+    virtual std::vector<std::pair<int, int>> generateMoves() noexcept;
 };
 
 #endif

@@ -28,7 +28,7 @@ void Rook::check(size_t r, size_t c) {
     throw checkException(op, getInfo().row, getInfo().col, getInfo().rank);
 }
 
-vector<pair<int, int>> Rook::generateMoves() {
+vector<pair<int, int>> Rook::generateMoves() noexcept {
     size_t r = getRow();
     size_t c = getCol();
     vector<pair<int, int>> ret;

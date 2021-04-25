@@ -13,9 +13,8 @@ TextDisplay::TextDisplay() {
     }
 }
 
-
 // returns char representing either black or white board
-char TextDisplay::squareChar(int row, int col) const {
+char TextDisplay::squareChar(int row, int col) const noexcept {
   if (row % 2 == 0) {
     if (col % 2 == 0) {
         return '-';
@@ -32,7 +31,7 @@ char TextDisplay::squareChar(int row, int col) const {
 }
 
 // returns display icon for piece of colour and rank
-char TextDisplay::getIcon(Colour colour, Rank rank) const {
+char TextDisplay::getIcon(Colour colour, Rank rank) const noexcept {
   char toprint;
   if (rank == Rank::p) {
     toprint = 'p';
@@ -55,8 +54,6 @@ char TextDisplay::getIcon(Colour colour, Rank rank) const {
   return toprint;
 }
 
-
-
 void TextDisplay::notify( Subject<Info, State> & whoNotified) {
   State fromState = whoNotified.getState();
   if (fromState.type == StateType::Standing) {
@@ -75,8 +72,7 @@ void TextDisplay::notify( Subject<Info, State> & whoNotified) {
   }
 }
 
-
-ostream & operator<<(ostream &out, const TextDisplay &td) {
+ostream & operator<<(ostream &out, const TextDisplay &td) const noexcept {
     int R = 8;
     for (auto it = td.theDisplay.end() - 1; it >= td.theDisplay.begin(); --it) {
         out << R << " ";

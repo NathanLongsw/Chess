@@ -32,8 +32,8 @@ public:
     void attach(Observer<InfoType, StateType> *o);
     void detach(Observer<InfoType, StateType> *o);
     void notifyObservers();
-    virtual InfoType getInfo() const = 0;
-    StateType getState() const;
+    virtual InfoType getInfo() const noexcept = 0;
+    StateType getState() const noexcept;
 };
 
 template <typename InfoType, typename StateType>
@@ -64,7 +64,7 @@ void Subject<InfoType, StateType>::detach( Observer<InfoType, StateType> *o ) {
 }
 
 template <typename InfoType, typename StateType>
-StateType Subject<InfoType, StateType>::getState() const {
+StateType Subject<InfoType, StateType>::getState() const noexcept {
     return state;
 }
 

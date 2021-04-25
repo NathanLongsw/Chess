@@ -26,18 +26,18 @@ public:
     Piece(size_t r, size_t c, Rank R, Colour col);
     virtual void move(size_t r, size_t c) = 0;
     virtual void check(size_t r, size_t c) = 0;
-    virtual std::vector<std::pair<int, int>> generateMoves() = 0;
+    virtual std::vector<std::pair<int, int>> generateMoves() noexcept = 0;
   //  void undo(size_t r, size_t c); //Invariants should allow piece to just move there
     void setPiece(Rank t, Colour colour, size_t r, size_t c); // Place a piece of given colour here.
     // Any piece that moves will call this overriden for king so he know if in check
     virtual void notify(Subject<Info, State> &whoFrom) override; 
-    Info getInfo() const override;
-    size_t &getRow();
-    size_t &getCol();
-    bool &getFirst();
-    bool &getPass();
-    Rank &getRank();
-    Colour &getColour();
+    Info getInfo() const noexcept override;
+    size_t &getRow() noexcept;
+    size_t &getCol() noexcept;
+    bool &getFirst() noexcept;
+    bool &getPass() noexcept;
+    Rank &getRank() noexcept;
+    Colour &getColour() noexcept;
 };
 
 class InvalidMoveException {};
@@ -48,12 +48,12 @@ class checkException{
     size_t row, col;
     Rank rank;
 
-    public:
+public:
     checkException(Colour c, size_t r, size_t co, Rank ra): colour{c}, row{r}, col{co}, rank{ra} {}
-    Colour getColour() const {return colour; }
-    Rank getRank() const { return rank; }
-    size_t getRow() const { return row; }
-    size_t getCol() const { return col; }
+    Colour getColour() const noexcept {return colour; }
+    Rank getRank() const noexcept { return rank; }
+    size_t getRow() const noexcept { return row; }
+    size_t getCol() const noexcept { return col; }
 };
 
 #endif

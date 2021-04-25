@@ -10,7 +10,7 @@ void Piece::setPiece(Rank t, Colour colour, size_t r, size_t c) {
     moves = generateMoves();
 }
 
-bool inBetween(size_t row, size_t col, size_t fromRow, size_t fromCol, size_t toRow, size_t toCol) {
+bool inBetween(size_t row, size_t col, size_t fromRow, size_t fromCol, size_t toRow, size_t toCol) const noexcept {
     bool hor = ((row < toRow && row > fromRow) || (row > toRow && row < fromRow));
 
     bool ver = ((col < toCol && col > fromCol) || (col > toCol && col < fromCol));
@@ -164,30 +164,30 @@ void Piece::notify(Subject<Info, State> &whoFrom) {
     }
 }
 
-Info Piece::getInfo() const {
+Info Piece::getInfo() const noexcept {
     return Info{row, col, colour, rank};
 }
 
-size_t &getRow() {
+size_t &getRow() noexcept {
     return row;
 }
 
-size_t &getCol() {
+size_t &getCol() noexcept {
     return col;
 }
 
-bool &getFirst() {
+bool &getFirst() noexcept {
     return first;
 }
 
-bool &getPass() {
+bool &getPass() noexcept {
     return pass;
 }
 
-Rank &getRank() {
+Rank &getRank() noexcept {
     return rank;
 }
 
-Colour &getColour() {
+Colour &getColour() noexcept {
     return colour;
 }

@@ -3,4 +3,4 @@
 
 Player::Player(Board *Board, Colour colour): colour{colour}, gameboard{Board} {}
 
-Player::~Player(){}
+Player::~Player() {}

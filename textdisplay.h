@@ -2,8 +2,7 @@
 #define _TEXTDISPLAY_H_
 #include <iostream>
 #include <vector>
-#include "info.h"
-#include "observer.h"
+#include "piece.h"
 
 class TextDisplay : public Observer<Info, State> {
     std::vector<std::vector<char>> theDisplay;

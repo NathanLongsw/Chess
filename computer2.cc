@@ -4,7 +4,7 @@
 #include <utility>
 using namespace std;
 
-Computer2::Computer2(Board *gameboard, Colour Colour, unsigned int seed) : Computer1{gameboard, Colour, seed} {
+Computer2::Computer2(Board *gameboard, Colour Colour, unsigned int seed): Computer1{gameboard, Colour, seed} {
     pieces = gameboard->getPieces();
 }
 

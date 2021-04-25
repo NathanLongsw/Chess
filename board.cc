@@ -8,8 +8,7 @@
 #include "queen.h"
 #include "king.h"
 #include <iostream>
-using std::cout;
-using std::endl;
+using namespace std;
 
 Board::Board(bool graphics): graphics{graphics} {}
 
@@ -30,19 +29,17 @@ void Board::play(Colour colour) {
 
 // Initializes players
 void Board::initPlayers(unsigned seed) {
-    std::string whitePlayer, blackPlayer;
-	std::cin >> whitePlayer >> blackPlayer;
+    string whitePlayer, blackPlayer;
+	cin >> whitePlayer >> blackPlayer;
 
-	if(whitePlayer == "human") white = std::make_shared<Human>(this, Colour::White); 
-	else if(whitePlayer == "computer1") white = std::make_shared<Computer1>(this, Colour::White, seed);
-	else if(whitePlayer == "computer2") white = std::make_shared<Computer2>(this, Colour::White, seed); 
-	else if(whitePlayer == "computer3") white = std::make_shared<Computer3>(this, Colour::White, seed);
-	//else if(whitePlayer == "computer4") white = std::make_shared<Computer4>(this, Colour::White, seed);
-	if(blackPlayer == "human") black = std::make_shared<Human>(this, Colour::Black);
-	else if(blackPlayer == "computer1") black = std::make_shared<Computer1>(this, Colour::Black, seed);
-	else if(blackPlayer == "computer2") black = std::make_shared<Computer2>(this, Colour::Black, seed); 
-	else if(blackPlayer == "computer3") black = std::make_shared<Computer3>(this, Colour::Black, seed);
-	//else if(blackPlayer == "computer4") black = std::make_shared<Computer4>(this, Colour::Black. seed);
+	if(whitePlayer == "human") white = make_shared<Human>(this, Colour::White); 
+	else if(whitePlayer == "computer1") white = make_shared<Computer1>(this, Colour::White, seed);
+	else if(whitePlayer == "computer2") white = make_shared<Computer2>(this, Colour::White, seed); 
+	else if(whitePlayer == "computer3") white = make_shared<Computer3>(this, Colour::White, seed);
+	if(blackPlayer == "human") black = make_shared<Human>(this, Colour::Black);
+	else if(blackPlayer == "computer1") black = make_shared<Computer1>(this, Colour::Black, seed);
+	else if(blackPlayer == "computer2") black = make_shared<Computer2>(this, Colour::Black, seed); 
+	else if(blackPlayer == "computer3") black = make_shared<Computer3>(this, Colour::Black, seed);
 
 	if (white && black) {
         for (size_t i = 0; i < 8; ++i) {
@@ -58,7 +55,7 @@ void Board::initPlayers(unsigned seed) {
                 }
             }
         }
-	    std::cout << *this;
+	    cout << *this;
         return;
 	}
 	throw InvalidPlayer{};
@@ -73,12 +70,11 @@ void Board::attachPieces(const int n)
 		{
 			pieces[i][j]->attach(td.get());
 			if (graphics) pieces[i][j]->attach(gd.get());
-			for (int r = std::max((i - 1), 0); r <= std::min((i + 1), (n - 1)); r++)
+			for (int r = max((i - 1), 0); r <= min((i + 1), (n - 1)); ++r)
 			{
-				for (int c = std::max((j - 1), 0); c <= std::min((j + 1), (n - 1)); c++)
+				for (int c = max((j - 1), 0); c <= min((j + 1), (n - 1)); ++c)
 				{
-					if (!(r == i && c == j))
-						pieces[i][j]->attach(pieces[r][c].get());
+					if (!(r == i && c == j)) pieces[i][j]->attach(pieces[r][c].get());
 				}
 			}
 		}
@@ -92,14 +88,14 @@ void Board::detachPiece(Piece *p)
 	int j = p->getCol();
 	p->detach(td.get());
 	if (graphics) p->detach(gd.get());
-	for (int r = std::max((i - 1), 0); r <= std::min((i + 1), 7); r++)
+	for (int r = max((i - 1), 0); r <= min((i + 1), 7); r++)
 	{
-		for (int c = std::max((j - 1), 0); c <= std::min((j + 1), 7); c++)
+		for (int c = max((j - 1), 0); c <= min((j + 1), 7); c++)
 		{
 			if (!(r == i && c == j))
 			{
 				pieces[r][c]->detach(p);
-				p->detach(pieces[r][c].get());
+			    p->detach(pieces[r][c].get());
 			}
 		}
 	}
@@ -112,9 +108,9 @@ void Board::attach(Piece *p)
 	int j = p->getCol();
 	p->attach(td.get());
 	if (graphics) p->attach(gd.get());
-	for (int r = std::max((i - 1), 0); r <= std::min((i + 1), 7); r++)
+	for (int r = max((i - 1), 0); r <= min((i + 1), 7); r++)
 	{
-		for (int c = std::max((j - 1), 0); c <= std::min((j + 1), 7); c++)
+		for (int c = max((j - 1), 0); c <= min((j + 1), 7); c++)
 		{
 			if (!(r == i && c == j))
 			{
@@ -130,14 +126,14 @@ void Board::init()
 {
 	pieces.clear();
 	moves.clear();
-	td = std::make_shared<TextDisplay>();
-    if (graphics) gd = std::make_shared<GraphicsDisplay>();
+	td = make_shared<TextDisplay>();
+    if (graphics) gd = make_shared<GraphicsDisplay>();
 	for (size_t i = 0; i < 8; i++)
 	{
 		vector<std::shared_ptr<Piece>> row;
 		for (size_t j = 0; j < 8; j++)
 		{
-			row.emplace_back(std::make_shared<Blank>(i, j));
+			row.emplace_back(make_shared<Blank>(i, j));
 		}
 		pieces.push_back(row);
 	}
@@ -154,19 +150,19 @@ void Board::setPiece(size_t r, size_t c, Rank rank, Colour colour)
 	detachPiece(pieces[r][c].get());
 
 	if (rank == Rank::r)
-		pieces[r][c] = std::make_shared<Rook>(r, c, colour); 
+		pieces[r][c] = make_shared<Rook>(r, c, colour); 
 	else if (rank == Rank::p)
-		pieces[r][c] = std::make_shared<Pawn>(r, c, colour);
+		pieces[r][c] = make_shared<Pawn>(r, c, colour);
 	else if (rank == Rank::k)
-		pieces[r][c] = std::make_shared<King>(r, c, colour);
+		pieces[r][c] = make_shared<King>(r, c, colour);
 	else if (rank == Rank::q)
-		pieces[r][c] = std::make_shared<Queen>(r, c, colour);
+		pieces[r][c] = make_shared<Queen>(r, c, colour);
 	else if (rank == Rank::n)
-		pieces[r][c] = std::make_shared<Knight>(r, c, colour);
+		pieces[r][c] = make_shared<Knight>(r, c, colour);
 	else if (rank == Rank::b)
-		pieces[r][c] = std::make_shared<Bishop>(r, c, colour);
+		pieces[r][c] = make_shared<Bishop>(r, c, colour);
 	else
-		pieces[r][c] = std::make_shared<Blank>(r, c);
+		pieces[r][c] = make_shared<Blank>(r, c);
 	
 	if (r == passRow && c == passCol && rank == Rank::blank) {
 	    pieces[passRow][passCol]->getPass() = true;
@@ -281,9 +277,9 @@ bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour
 		}
 	int intRow = kRow;
 	int intCol = kCol;
-	for (int r = std::max((intRow - 1), 0); r <= std::min((intRow + 1), 7); r++)
+	for (int r = max((intRow - 1), 0); r <= min((intRow + 1), 7); r++)
 	{
-		for (int c = std::max((intCol- 1), 0); c <= std::min((intCol + 1), 7); c++)
+		for (int c = max((intCol- 1), 0); c <= min((intCol + 1), 7); c++)
 		{
 			if (!(r == intRow && c == intCol))
 				try
@@ -320,7 +316,7 @@ bool Board::inStalemate(Colour colour) {
     for (const auto &n : pieces) {
         for (const auto &p : n) {
             if (p->getColour() != colour) continue;
-            std::vector<std::pair<int, int>> validmoves = p->generateMoves();
+            vector<pair<int, int>> validmoves = p->generateMoves();
             for (const auto &i : validmoves) {
                 if ((i.first > 7) || (i.first  < 0) || (i.second  > 7) || (i.second < 0)) continue;
                 
@@ -523,7 +519,7 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 			if ((colour == Colour::White && dynamic_cast<Human*>(white.get())) || 
                 (colour == Colour::Black && dynamic_cast<Human*>(black.get()))) {
                     char promote;
-                    std::cin >> promote;
+                    cin >> promote;
                     if (promote == 'r' || promote == 'R')
                         rankFrom = Rank::r;
                     else if (promote == 'n' || promote == 'N')
@@ -788,7 +784,7 @@ void Board::undo(Colour colour, bool staleMate)
 }
 
 // Returns copy of the board
-vector<vector<std::shared_ptr<Piece>>> Board::getPieces() const noexcept
+vector<vector<shared_ptr<Piece>>> Board::getPieces() const noexcept
 {
 	return pieces;
 }
@@ -841,10 +837,10 @@ void Board::printHistory() const
 {
 	if (moves.empty()) throw UndoException{};
 	char type;
-	std::cin >> type;
-	std::string cur = "White";
+	cin >> type;
+	string cur = "White";
 	for (const auto &n : moves) {
-        std::string col = "";
+        string col = "";
         char rankfrom = 0, rankto = 0;
 		if (type == 'a') {
 			cout << cur + " played: " << n.getFrom().col << n.getFrom().row << " to " << n.getTo().col << n.getTo().row;
@@ -882,7 +878,7 @@ void Board::printHistory() const
 }
 
 // Outputs Board
-std::ostream &operator<<(std::ostream &out, const Board &b)
+ostream &operator<<(ostream &out, const Board &b)
 {
 	if (b.td != nullptr)
 		out << *b.td;

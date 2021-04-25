@@ -3,7 +3,7 @@
 #include "piece.h"
 
 class Blank : public Piece {
-    vector<pair<int, int>> moves;
+    std::vector<std::pair<int, int>> moves;
   public:
     Blank(size_t r, size_t c);
     virtual void move(size_t r, size_t c);

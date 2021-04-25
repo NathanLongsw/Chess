@@ -12,7 +12,9 @@ Computer2::~Computer2() {}
 
 
 Colour Computer2::getEnemyColour() {
-    colour == Colour::White ? return Colour::Black : return Colour::White;
+    Colour col = Colour::NoColour;
+    colour == Colour::White ? col = Colour::Black : col = Colour::White;
+    return col;
 }
 
 void Computer2::playCapture() {

@@ -2,6 +2,8 @@
 #define BLANK_H
 #include "piece.h"
 
+/* Derived class which inhertis from Piece */
+
 class Blank : public Piece {
     std::vector<std::pair<int, int>> moves;
   public:

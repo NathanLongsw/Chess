@@ -1,5 +1,7 @@
 #include "piece.h"
 
+Piece::Piece() {};
+
 Piece::Piece(size_t r, size_t c) : row{r}, col{c}, colour{Colour::NoColour}, rank{Rank::blank} {}
 
 Piece::Piece(size_t r, size_t c, Rank R, Colour col) : row{r}, col{c}, colour{col}, rank{R} {}
@@ -31,7 +33,6 @@ bool Piece::inBetween(size_t row, size_t col, size_t fromRow, size_t fromCol, si
     return false;
 }
 
-// Ensures valid move and checks (No blocks, diff colour, &c)
 void Piece::notify(Subject<Info, State> &whoFrom) {
     if (whoFrom.getState().type == StateType::Standing ||
         whoFrom.getState().type == StateType::NewPiece)
@@ -43,7 +44,6 @@ void Piece::notify(Subject<Info, State> &whoFrom) {
     if (whoFrom.getState().rank != Rank::n && rank != Rank::blank && whoFrom.getState().type != StateType::Check)
         if (inBetween(row, col, whoFrom.getInfo().row, whoFrom.getInfo().col, whoFrom.getState().row, whoFrom.getState().col))
             throw InvalidMoveException{};
-    
 
     if (whoFrom.getState().type == StateType::Castling) {
         if (getInfo().row == whoFrom.getState().row) {

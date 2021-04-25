@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include "computer1.h"
 
+/* Derived class which inhertis from Computer1 */
+
 class Board;
 
 class Computer2: public Computer1 {

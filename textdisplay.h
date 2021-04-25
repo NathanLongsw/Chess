@@ -4,6 +4,8 @@
 #include <vector>
 #include "piece.h"
 
+/* Derived class which inhertis from Observer */
+
 class TextDisplay : public Observer<Info, State> {
     std::vector<std::vector<char>> theDisplay;
     char squareChar(int row, int col) const noexcept; // returns appropariate char for black or white square

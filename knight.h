@@ -2,6 +2,8 @@
 #define KNIGHT_H
 #include "piece.h"
 
+/* Derived class which inhertis from Piece */
+
 class Knight : public Piece {
   public:
     Knight(size_t r, size_t c, Colour col);

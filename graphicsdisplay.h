@@ -6,6 +6,8 @@
 #include "window.h"
 #include "piece.h"
 
+/* Derived class which inhertis from Observer */
+
 class Xwindow;
 
 class GraphicsDisplay: public Observer<Info, State> {

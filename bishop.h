@@ -2,6 +2,8 @@
 #define BISHOP_H
 #include "piece.h"
 
+/* Derived class which inhertis from Piece */
+
 class Bishop : public Piece {
   public:
     Bishop(size_t r, size_t c,  Colour col);

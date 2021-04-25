@@ -16,7 +16,11 @@
 */
 
 enum class StateType { NewPiece, Castling, Moving, Standing, Check};
+
+// Used to store the colour of a piece
 enum class Colour { NoColour, Black, White };
+
+// Used to store the rank (type) of a piece
 enum class Rank { p, r, n, b, k, q, blank };
 
 struct State {

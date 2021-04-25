@@ -4,6 +4,8 @@
 #include "piece.h"
 #include <stdlib.h>
 
+/* Derived class which inhertis from Player */
+
 class Board;
 
 class Computer1: public Player {

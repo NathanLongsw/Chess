@@ -2,6 +2,8 @@
 #define QUEEN_H
 #include "piece.h"
 
+/* Derived class which inhertis from Piece */
+
 class Queen : public Piece {
   public:
     Queen(size_t r, size_t c, Colour col);

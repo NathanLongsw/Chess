@@ -2,6 +2,8 @@
 #define PAWN_H
 #include "piece.h"
 
+/* Derived class which inhertis from Piece */
+
 class Pawn : public Piece {
   public:
    Pawn(size_t r, size_t c, Colour col);

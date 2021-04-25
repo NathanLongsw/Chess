@@ -1,13 +1,13 @@
 #include "board.h"
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
+#include "blank.h"
 #include "rook.h"
 #include "pawn.h"
 #include "bishop.h"
 #include "knight.h"
 #include "queen.h"
 #include "king.h"
-#include <iostream>
 using namespace std;
 
 Board::Board(bool graphics): graphics{graphics} {}
@@ -62,18 +62,13 @@ void Board::initPlayers(unsigned seed) {
 }
 
 // Attaches pieces to initialize observer design pattern
-void Board::attachPieces(const int n)
-{
-	for (int i = 0; i < n; ++i)
-	{
-		for (int j = 0; j < n; ++j)
-		{
+void Board::attachPieces(const int n) {
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n; ++j) {
 			pieces[i][j]->attach(td.get());
 			if (graphics) pieces[i][j]->attach(gd.get());
-			for (int r = max((i - 1), 0); r <= min((i + 1), (n - 1)); ++r)
-			{
-				for (int c = max((j - 1), 0); c <= min((j + 1), (n - 1)); ++c)
-				{
+			for (int r = max((i - 1), 0); r <= min((i + 1), (n - 1)); ++r) {
+				for (int c = max((j - 1), 0); c <= min((j + 1), (n - 1)); ++c) {
 					if (!(r == i && c == j)) pieces[i][j]->attach(pieces[r][c].get());
 				}
 			}
@@ -82,18 +77,14 @@ void Board::attachPieces(const int n)
 }
 
 // Detaches pieces
-void Board::detachPiece(Piece *p)
-{
+void Board::detachPiece(Piece *p) {
 	int i = p->getRow();
 	int j = p->getCol();
 	p->detach(td.get());
 	if (graphics) p->detach(gd.get());
-	for (int r = max((i - 1), 0); r <= min((i + 1), 7); r++)
-	{
-		for (int c = max((j - 1), 0); c <= min((j + 1), 7); c++)
-		{
-			if (!(r == i && c == j))
-			{
+	for (int r = max((i - 1), 0); r <= min((i + 1), 7); r++) {
+		for (int c = max((j - 1), 0); c <= min((j + 1), 7); c++) {
+			if (!(r == i && c == j)) {
 				pieces[r][c]->detach(p);
 			    p->detach(pieces[r][c].get());
 			}
@@ -102,18 +93,14 @@ void Board::detachPiece(Piece *p)
 }
 
 // Initializes observer design pattern
-void Board::attach(Piece *p)
-{
+void Board::attach(Piece *p) {
 	int i = p->getRow();
 	int j = p->getCol();
 	p->attach(td.get());
 	if (graphics) p->attach(gd.get());
-	for (int r = max((i - 1), 0); r <= min((i + 1), 7); r++)
-	{
-		for (int c = max((j - 1), 0); c <= min((j + 1), 7); c++)
-		{
-			if (!(r == i && c == j))
-			{
+	for (int r = max((i - 1), 0); r <= min((i + 1), 7); r++) {
+		for (int c = max((j - 1), 0); c <= min((j + 1), 7); c++) {
+			if (!(r == i && c == j)) {
 				pieces[r][c]->attach(p);
 				p->attach(pieces[r][c].get());
 			}
@@ -122,17 +109,14 @@ void Board::attach(Piece *p)
 }
 
 // Sets up the board.  Clears old board, if necessary.
-void Board::init()
-{
+void Board::init() {
 	pieces.clear();
 	moves.clear();
 	td = make_shared<TextDisplay>();
     if (graphics) gd = make_shared<GraphicsDisplay>();
-	for (size_t i = 0; i < 8; i++)
-	{
+	for (size_t i = 0; i < 8; i++) {
 		vector<shared_ptr<Piece>> row;
-		for (size_t j = 0; j < 8; j++)
-		{
+		for (size_t j = 0; j < 8; j++) {
 			row.emplace_back(make_shared<Blank>(i, j));
 		}
 		pieces.push_back(row);
@@ -141,8 +125,7 @@ void Board::init()
 }
 
 // Places piece at row r, col c.
-void Board::setPiece(size_t r, size_t c, Rank rank, Colour colour)
-{
+void Board::setPiece(size_t r, size_t c, Rank rank, Colour colour) {
 	if ((r > 7 || r < 0) || (c > 7 || c < 0) ||
 		(rank == Rank::blank && pieces[r][c]->getInfo().rank == Rank::blank))
 		throw InvalidMoveException{};
@@ -164,39 +147,32 @@ void Board::setPiece(size_t r, size_t c, Rank rank, Colour colour)
 	else
 		pieces[r][c] = make_shared<Blank>(r, c);
 	
-	if (r == passRow && c == passCol && rank == Rank::blank) {
+	if (r == passRow && c == passCol && rank == Rank::blank) 
 	    pieces[passRow][passCol]->getPass() = true;
-	}
 
 	attach(pieces[r][c].get());
 	pieces[r][c]->setPiece(rank, colour, r, c);
 }
 
 // Determines if checkmate has occurred
-bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour)
-{
+bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour) {
 	Colour myColour = atColour == Colour::White ? Colour::Black : Colour::White;
 	size_t kRow = myColour == Colour::White ? wRow : bRow;
 	size_t kCol = myColour == Colour::White ? wCol : bCol;
 	size_t tempRow = kRow;
 	size_t tempCol = kCol;
 
-	for (auto & n : pieces)
-	{
-		for (auto p : n)
-		{
-			if (p->getColour() != myColour)
-				continue;
-			try
-			{
+	for (auto & n : pieces) {
+		for (auto p : n) {
+			if (p->getColour() != myColour) continue;
+			try {
 				move(p->getInfo().col + 'a', p->getInfo().row + 1, atCol + 'a', atRow + 1, myColour);
 				undo(myColour, true);
 				myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
 	           	myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
 				return false;
 			}
-			catch (...)
-			{
+			catch (...) {
 				myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
 	            myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
 				continue;
@@ -210,80 +186,67 @@ bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour
 	int hiRow = atRow > kRow ? atRow : kRow;
 
 
-	if (atRank != Rank::n)
-	{
-		for (auto & n : pieces)
-		{
-			for (auto p : n)
-			{
-					if (p->getColour() != myColour)
-						continue;
-					if (atRow == kRow)
-					{
-
-						for (int l = lowCol + 1; l < hiCol; ++l)
-						{
-							try{
-							move(p->getInfo().col + 'a', p->getInfo().row + 1, l + 'a', atRow + 1, myColour);
-							undo(myColour, true);
-							myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
-	           				myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
-							return false;
-							} catch(...) {
-								myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
-	           					myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
-								continue;
-							}
-						}
-					}
-
-					
-					else if (atCol == kCol)
-					{
-						for (int l = lowRow + 1; l < hiRow; ++l)
-						{
-							try {
-							move( p->getInfo().col + 'a', p->getInfo().row + 1, atCol + 'a', l + 1, myColour);
-							myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
-	           				myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
-							undo(myColour, true);
-							return false;
-							} catch (...) {
-								myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
-	           					myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
-								continue;
-							}
-						}
-					}
-					int cc = 1;
-					for (int l = lowRow + 1; l < hiRow; ++l)
-					{
-						int col = lowCol + cc;
-						try {
-						move( p->getInfo().col + 'a', p->getInfo().row + 1, col + 'a', l + 1, myColour);
-						undo(myColour, true);
-						myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
-	           			myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
-						return false;
-						} catch (...) {
-							myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
-	           				myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
-                            cc++;
+	if (atRank != Rank::n) {
+		for (auto & n : pieces) {
+			for (auto p : n) {
+                if (p->getColour() != myColour)
+                    continue;
+                if (atRow == kRow) {
+                    for (int l = lowCol + 1; l < hiCol; ++l) {
+                        try {
+                        move(p->getInfo().col + 'a', p->getInfo().row + 1, l + 'a', atRow + 1, myColour);
+                        undo(myColour, true);
+                        myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
+                        myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
+                        return false;
+                        } catch(...) {
+                            myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
+                            myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
                             continue;
                         }
-					}
-				}
+                    }
+                }
+
+                else if (atCol == kCol) {
+                    for (int l = lowRow + 1; l < hiRow; ++l) {
+                        try {
+                        move( p->getInfo().col + 'a', p->getInfo().row + 1, atCol + 'a', l + 1, myColour);
+                        myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
+                        myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
+                        undo(myColour, true);
+                        return false;
+                        } catch (...) {
+                            myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
+                            myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
+                            continue;
+                        }
+                    }
+                }
+                int cc = 1;
+                for (int l = lowRow + 1; l < hiRow; ++l) {
+                    int col = lowCol + cc;
+                    try {
+                    move( p->getInfo().col + 'a', p->getInfo().row + 1, col + 'a', l + 1, myColour);
+                    undo(myColour, true);
+                    myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
+                    myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
+                    return false;
+                    } catch (...) {
+                        myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
+                        myColour == Colour::White ? wCol = tempCol : bCol = tempCol;
+                        cc++;
+                        continue;
+                    }
+                }
 			}
 		}
+	}
 	int intRow = kRow;
 	int intCol = kCol;
-	for (int r = max((intRow - 1), 0); r <= min((intRow + 1), 7); r++)
-	{
-		for (int c = max((intCol- 1), 0); c <= min((intCol + 1), 7); c++)
-		{
+	for (int r = max((intRow - 1), 0); r <= min((intRow + 1), 7); r++) {
+		for (int c = max((intCol- 1), 0); c <= min((intCol + 1), 7); c++) {
 			if (!(r == intRow && c == intCol))
-				try
-				{
+				try {
 					move(kCol + 'a', kRow + 1, c + 'a', r + 1, myColour);
 					undo(myColour, true);
 					myColour == Colour::White ? wRow = tempRow : bRow = tempRow;
@@ -300,7 +263,6 @@ bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour
 	}
 	return true;
 }
-
 
 // Determines if colour has any legal moves
 bool Board::inStalemate(Colour colour) {
@@ -332,8 +294,8 @@ bool Board::inStalemate(Colour colour) {
                 size_t toRowAdj = static_cast<size_t>(i.first);
                 size_t toColAdj = static_cast<size_t>(i.second);
 		    
-		if (toRowAdj == wRow && toColAdj == wCol) continue;
-		if (toRowAdj == bRow && toColAdj == bCol) continue;
+                if (toRowAdj == wRow && toColAdj == wCol) continue;
+                if (toRowAdj == bRow && toColAdj == bCol) continue;
 
                 size_t castleRow = 0, castleCol = 0;
                 char moveType = 'd';
@@ -342,8 +304,7 @@ bool Board::inStalemate(Colour colour) {
                     p->move(i.first, i.second);
 
                     //Castling logic
-                    if (fromInfo.rank == Rank::k && abs_diff(fromColAdj, toColAdj) == 2)
-                    {
+                    if (fromInfo.rank == Rank::k && abs_diff(fromColAdj, toColAdj) == 2) {
                         if ((colour == Colour::White && wCheck) || (colour == Colour::Black && bCheck))
                             throw InvalidMoveException{};
 
@@ -353,45 +314,38 @@ bool Board::inStalemate(Colour colour) {
                         if (fromColAdj > toColAdj) castleCol = 3;
                         else castleCol = 5;
 
-                        if (castleCol == 3)
-                        {
+                        if (castleCol == 3) {
                             if (pieces[castleRow][castleCol - 3]->getInfo().rank == Rank::blank || 
                                 !(pieces[castleRow][castleCol - 3]->getFirst() && pieces[fromRowAdj][fromColAdj]->getFirst()))
                                 throw InvalidMoveException{};
                         }
-                        else
-                        {
+                        else {
                             if (pieces[castleRow][castleCol + 2]->getInfo().rank == Rank::blank || 
                                 !(pieces[castleRow][castleCol + 2]->getFirst() && pieces[fromRowAdj][fromColAdj]->getFirst()))
                                 throw InvalidMoveException{};
                         }
                         moveType = 'c';
                     }
-
                     //En passant add colour determined condition for col
 		            if (pieces[fromRowAdj][fromColAdj]->getRank() == Rank::p && 
-				((colour==Colour::White && toRowAdj == passRow && toColAdj == passCol) || 
-				 (colour==Colour::Black && toRowAdj == passRow && toColAdj == passCol))) {
-                        	    moveType = 'e';
-			            rankTo = Rank::p;
+                        ((colour==Colour::White && toRowAdj == passRow && toColAdj == passCol) || 
+                        (colour==Colour::Black && toRowAdj == passRow && toColAdj == passCol))) {
+                            moveType = 'e';
+                            rankTo = Rank::p;
                     }
-                } 
+                }
                 catch (...) {
                     continue;
-                } if (moveType == 'c')
-                {
-                    if (castleCol == 3)
-                    {
+                } if (moveType == 'c') {
+                    if (castleCol == 3) {
                         setPiece(castleRow, castleCol - 3, Rank::blank, Colour::NoColour);
                     }
-                    else
-                    {
+                    else {
                         setPiece(castleRow, castleCol + 2, Rank::blank, Colour::NoColour);
                     }
                     setPiece(castleRow, castleCol, Rank::r, colour);
                 }
-                else if (moveType == 'e')
-                {
+                else if (moveType == 'e') {
                     if (colour == Colour::White)
                         setPiece(passRow - 1, passCol, Rank::blank, Colour::NoColour);
                     else
@@ -426,8 +380,7 @@ bool Board::inStalemate(Colour colour) {
 }
 
 // Moves piece at fromRow-1, fromCol-'a' to toRow-1, toCol-'a'
-void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour colour)
-{
+void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour colour) {
 	if ((fromRow > 8 || fromRow < 1) || (toRow > 8 || toRow < 1) ||
 		((fromCol - 'a') > 7 || (fromCol - 'a' < 0)) || ((toCol - 'a') > 7 || (toCol - 'a' < 0)))
 		throw InvalidMoveException{};
@@ -439,7 +392,6 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 
 	if (inStalemate(colour)) throw staleMateException{};
 
-	char moveType = 'd';
 	Rank rankTo = toInfo.rank;
 	Rank rankFrom = fromInfo.rank;
 	
@@ -449,16 +401,16 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 	size_t toColAdj = static_cast<size_t>(toCol - 'a');
 
 	size_t castleRow = 0, castleCol = 0;
-	try
-	{
+    char moveType = 'd';
+
+	try {
 		//Enssure no one's attacking kings
 		if (toRowAdj == wRow && toColAdj == wCol) throw InvalidMoveException{};
 		if (toRowAdj == bRow && toColAdj == bCol) throw InvalidMoveException{};
 		//Ensure move is possible
 		pieces[fromRow - 1][fromCol - 'a']->move(toRow - 1, toCol - 'a');
 		//Castling logic
-		if (fromRowAdj == wRow && fromColAdj == wCol && abs_diff(fromCol, toCol) == 2)
-		{
+		if (fromRowAdj == wRow && fromColAdj == wCol && abs_diff(fromCol, toCol) == 2) {
 			if (wCheck) {
                 throw InvalidMoveException{};
             }
@@ -469,14 +421,12 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 			else
 				castleCol = 5;
 
-			if (castleCol == 3)
-			{
+			if (castleCol == 3) {
 				if (pieces[castleRow][castleCol - 3]->getInfo().rank == Rank::blank || 
                     !(pieces[castleRow][castleCol - 3]->getFirst() && pieces[wRow][wCol]->getFirst()))
 					throw InvalidMoveException{};
 			}
-			else
-			{
+			else {
 				if (pieces[castleRow][castleCol + 2]->getInfo().rank == Rank::blank || 
                     !(pieces[castleRow][castleCol + 2]->getFirst() && pieces[wRow][wCol]->getFirst()))
 					throw InvalidMoveException{};
@@ -485,8 +435,7 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
             moveType = 'c';
 		}
 
-		else if (fromRowAdj == bRow && fromColAdj == bCol && abs_diff(fromCol, toCol) == 2)
-		{
+		else if (fromRowAdj == bRow && fromColAdj == bCol && abs_diff(fromCol, toCol) == 2) {
             if (bCheck) {
                 throw InvalidMoveException{};
             }
@@ -497,14 +446,12 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 			else
 				castleCol = 5;
 
-			if (castleCol == 3)
-			{
+			if (castleCol == 3) {
 				if (pieces[castleRow][castleCol - 3]->getInfo().rank == Rank::blank || 
                     !(pieces[castleRow][castleCol - 3]->getFirst() && pieces[bRow][bCol]->getFirst()))
 					throw InvalidMoveException{};
 			}
-			else
-			{
+			else {
 				if (pieces[castleRow][castleCol + 2]->getInfo().rank == Rank::blank || 
                     !(pieces[castleRow][castleCol + 2]->getFirst() && pieces[bRow][bCol]->getFirst()))
 					throw InvalidMoveException{};
@@ -514,8 +461,7 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 		}
 
 		// promotion logic
-		if ((toRow == 8 || toRow == 1) && fromInfo.rank == Rank::p)
-		{
+		if ((toRow == 8 || toRow == 1) && fromInfo.rank == Rank::p) {
 			if ((colour == Colour::White && dynamic_cast<Human*>(white.get())) || 
                 (colour == Colour::Black && dynamic_cast<Human*>(black.get()))) {
                     char promote;
@@ -539,42 +485,34 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 		//En passant add colour determined condition for col
 		if (pieces[fromRow - 1][fromCol - 'a']->getRank() == Rank::p && 
             ((colour==Colour::White && toRow-1 == passRow && toColAdj == passCol) || 
-	     (colour==Colour::Black && toRow-1 == passRow && toColAdj == passCol)))
-		{
+	     (colour==Colour::Black && toRow-1 == passRow && toColAdj == passCol))) {
 			moveType = 'e';
 			rankTo = Rank::p;
 		}
 
 		//Update kings positions
-		if (fromRowAdj == wRow && fromColAdj == wCol)
-		{
+		if (fromRowAdj == wRow && fromColAdj == wCol) {
 			wRow = toRow - 1;
 			wCol = toCol - 'a';
 		}
-		if (fromRowAdj== bRow && fromColAdj == bCol)
-		{
+		if (fromRowAdj== bRow && fromColAdj == bCol) {
 			bRow = toRow - 1;
 			bCol = toCol - 'a';
 		}
 	}
-	catch (...)
-	{
+	catch (...) {
 		throw InvalidMoveException{};
 	}
-	if (moveType == 'c')
-	{
-		if (castleCol == 3)
-		{
+	if (moveType == 'c') {
+		if (castleCol == 3) {
 			setPiece(castleRow, castleCol - 3, Rank::blank, Colour::NoColour);
 		}
-		else
-		{
+		else {
 			setPiece(castleRow, castleCol + 2, Rank::blank, Colour::NoColour);
 		}
 		setPiece(castleRow, castleCol, Rank::r, colour);
 	}
-	else if (moveType == 'e')
-	{
+	else if (moveType == 'e') {
 		if (colour == Colour::White)
 			setPiece(passRow - 1, passCol, Rank::blank, Colour::NoColour);
 		else
@@ -587,30 +525,23 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 	pieces[toRow - 1][toCol - 'a']->getFirst() = false;
 	
 	//New pass is allowed
-	if (rankFrom == Rank::p && abs_diff(toRow, fromRow) == 2)
-	{
-		 if (passCol >= 0 && passCol < 9) {
-                	pieces[passRow][passCol]->getPass() = false;
-            	}
-		if (colour == Colour::White) {
-		    passRow = toRow - 2;
-		}
+	if (rankFrom == Rank::p && abs_diff(toRow, fromRow) == 2) {
+		 if (passCol >= 0 && passCol < 9) 
+            pieces[passRow][passCol]->getPass() = false;
+        
+		if (colour == Colour::White) passRow = toRow - 2;
 		else passRow = toRow;
 
 		passCol = toCol - 'a';
-            	pieces[passRow][passCol]->getPass() = true;
+        pieces[passRow][passCol]->getPass() = true;
 	}
-
 	    //Reset old pass and move to impossible position
 	    if ((passCol > 0 && passCol < 9) && !((passRow == toRow-2 || passRow == toRow ) && passCol == toCol - 'a')) {
-            
 		    pieces[passRow][passCol]->getPass() = false;
 		    passRow = 10;
 		    passCol = 10;
 	    }
-
-	try
-	{
+	try {
 		if (wCheck) {
 			pieces[wRow][wCol]->move(wRow, wCol);
 			wCheck = false;
@@ -618,7 +549,7 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 			pieces[bRow][bCol]->move(bRow, bCol);
 			bCheck = false;
 		}
-		if(colour == Colour::White) {
+		if (colour == Colour::White) {
 			pieces[wRow][wCol]->move(wRow, wCol);
 			wCheck = false;
 			pieces[bRow][bCol]->move(bRow, bCol);
@@ -630,29 +561,22 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 			wCheck = false;
 		}
 	}
-	catch (checkException &c)
-	{
-		if (c.getColour() == colour)
-		{
+	catch (checkException &c) {
+		if (c.getColour() == colour) {
 			undo(colour);
 			throw;
 		}
-		else
-		{
+		else {
 			colour == Colour::Black ? wCheck = true : bCheck = true;
-			if (inCheckmate(c.getRow(), c.getCol(), c.getRank(), colour)) {
+			if (inCheckmate(c.getRow(), c.getCol(), c.getRank(), colour))
 				throw checkMateException{};
-			}
 			throw;
-
 		}
 	}
 }
 
-
 // Undo last move
-void Board::undo(Colour colour, bool staleMate)
-{
+void Board::undo(Colour colour, bool staleMate) {
 	if (moves.empty()) throw UndoException{};
 	PlayerMove lastMove = moves.back();
 	Position from = lastMove.getFrom();
@@ -664,21 +588,18 @@ void Board::undo(Colour colour, bool staleMate)
 	size_t toRow = static_cast<size_t>(to.row - 1);
     size_t toCol = static_cast<size_t>(to.col - 'a');
     if (!staleMate) {
-        if (toRow == wRow && toCol == wCol)
-        {
+        if (toRow == wRow && toCol == wCol) {
             wRow = from.row - 1;
             wCol = from.col - 'a';
         }
-        if (toRow == bRow && toCol == bCol)
-        {
+        if (toRow == bRow && toCol == bCol) {
             bRow = from.row - 1;
             bCol = from.col - 'a';
         }
     }
 
 	// default or promotion moves
-	if (moveType == 'd' || moveType == 'p')
-	{
+	if (moveType == 'd' || moveType == 'p') {
 		// default moves
 		if (moveType == 'd') 
             setPiece(from.row - 1, from.col - 'a', rankFrom, colour);
@@ -688,8 +609,7 @@ void Board::undo(Colour colour, bool staleMate)
 
         if (!staleMate) {
             // reset en passant
-            if (passCol == toCol)
-            {
+            if (passCol == toCol) {
                 pieces[passRow][passCol]->getPass() = false;
                 passCol = 10;
                 passRow = 10;
@@ -701,8 +621,7 @@ void Board::undo(Colour colour, bool staleMate)
 		else 
             setPiece(to.row - 1, to.col - 'a', lastMove.getCaptured(), capturedColour);
 	}
-	else if (moveType == 'e')
-	{ // en passant moves
+	else if (moveType == 'e') {
 		setPiece(from.row - 1, from.col - 'a', rankFrom, colour);
 		setPiece(to.row - 1, to.col - 'a', Rank::blank, Colour::NoColour);
 		setPiece(from.row - 1, to.col - 'a', rankFrom, capturedColour);
@@ -716,40 +635,32 @@ void Board::undo(Colour colour, bool staleMate)
 		    pieces[passRow][passCol]->getPass() = true;
 		}
 	}
-	else
-	{ // castling moves
+	else {
 		setPiece(from.row - 1, from.col - 'a', rankFrom, colour);
 		setPiece(to.row - 1, to.col - 'a', Rank::blank, Colour::NoColour);
-		if (to.row == 1)
-		{
-			// white castle
-			if (to.col == 'c')
-			{
+		if (to.row == 1) {
+			if (to.col == 'c') {
 				// long
 				setPiece(0, 0, Rank::r, colour);
 				setPiece(0, 3, Rank::blank, Colour::NoColour);
 				pieces[0][0]->getFirst() = true;
 			}
-			if (to.col == 'g')
-			{
+			if (to.col == 'g') {
 				// short
 				setPiece(0, 7, Rank::r, colour);
 				setPiece(0, 5, Rank::blank, Colour::NoColour);
 				pieces[0][7]->getFirst() = true;
 			}
 		}
-		else
-		{
+		else {
 			// black castle
-			if (to.col == 'c')
-			{
+			if (to.col == 'c') {
 				// long
 				setPiece(7, 0, Rank::r, colour);
 				setPiece(7, 3, Rank::blank, Colour::NoColour);
 				pieces[7][0]->getFirst() = true;
 			}
-			if (to.col == 'g')
-			{
+			if (to.col == 'g') {
 				// short
 				setPiece(7, 7, Rank::r, colour);
 				setPiece(7, 5, Rank::blank, Colour::NoColour);
@@ -760,8 +671,7 @@ void Board::undo(Colour colour, bool staleMate)
 	if (lastMove.getFirst()) pieces[from.row - 1][from.col - 'a']->getFirst() = true;
 	moves.pop_back();
 	if (!staleMate) {
-		try
-		{
+		try {
 			if(wCheck) {
 				pieces[wRow][wCol]->move(wRow, wCol);
 				wCheck = false;
@@ -775,8 +685,7 @@ void Board::undo(Colour colour, bool staleMate)
 			pieces[wRow][wCol]->move(wRow, wCol);
 			bCheck = false;
 		}
-		catch (checkException &c)
-		{
+		catch (checkException &c) {
 			c.getColour() == Colour::White ? wCheck = true : bCheck = true;
 			throw;
 		}
@@ -784,44 +693,33 @@ void Board::undo(Colour colour, bool staleMate)
 }
 
 // Returns copy of the board
-vector<vector<shared_ptr<Piece>>> Board::getPieces() const noexcept
-{
+vector<vector<shared_ptr<Piece>>> Board::getPieces() const noexcept {
 	return pieces;
 }
 
 // Determines if the user can leave set up mode
-bool Board::canLeaveSetup() const
-{
+bool Board::canLeaveSetup() const {
 	bool whiteKing = false, blackKing = false;
-	for (int i = 0; i < 8; ++i)
-	{
+	for (int i = 0; i < 8; ++i) {
 		if ((pieces[0][i]->getInfo().rank == Rank::p) || (pieces[7][i]->getInfo().rank == Rank::p))
 			return false;
-		for (int j = 0; j < 8; j++)
-		{
-			if (pieces[i][j]->getInfo().rank == Rank::k)
-			{
-				if (pieces[i][j]->getInfo().colour == Colour::White)
-				{
+		for (int j = 0; j < 8; j++) {
+			if (pieces[i][j]->getInfo().rank == Rank::k) {
+				if (pieces[i][j]->getInfo().colour == Colour::White) {
 					whiteKing = true;
-					try
-					{
+					try {
 						pieces[i][j]->move(i, j);
 					}
-					catch (checkException &c)
-					{
+					catch (checkException &c) {
 						return false;
 					}
 				}
-				else
-				{
+				else {
 					blackKing = true;
-					try
-					{
+					try {
 						pieces[i][j]->move(i, j);
 					}
-					catch (checkException &c)
-					{
+					catch (checkException &c) {
 						return false;
 					}
 				}
@@ -833,8 +731,7 @@ bool Board::canLeaveSetup() const
 }
 
 // Prints a history of moves
-void Board::printHistory() const
-{
+void Board::printHistory() const {
 	if (moves.empty()) throw UndoException{};
 	char type;
 	cin >> type;
@@ -878,8 +775,7 @@ void Board::printHistory() const
 }
 
 // Outputs Board
-ostream &operator<<(ostream &out, const Board &b)
-{
+ostream &operator<<(ostream &out, const Board &b) {
 	if (b.td != nullptr)
 		out << *b.td;
 	if (b.graphics) {

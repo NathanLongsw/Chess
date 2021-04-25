@@ -12,15 +12,10 @@
 #include "computer2.h"
 #include "computer3.h"
 #include "piece.h"
-#include "blank.h"
-#include "pawn.h"
-#include "info.h"
-#include "state.h"
 #include "playermove.h"
 
 class GraphicsDisplay;
 class TextDisplay;
-class Computer4;
 
 template <typename InfoType, typename StateType> class Observer;
 

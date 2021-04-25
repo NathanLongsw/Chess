@@ -5,7 +5,8 @@
 #include <vector>
 
 class Board;
-//Pure virtual class, use strategy design pattern
+
+/* Pure virtual class used for strategy design pattern */
 
 enum class PlayerType {Human, C1, C2, C3, C4 };
 

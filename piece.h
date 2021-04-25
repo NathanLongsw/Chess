@@ -19,6 +19,7 @@ class Piece : public Subject<Info, State>, public Observer<Info, State> {
     bool first = true;
     bool pass = false;
     std::vector<std::pair<int, int>> moves;
+    bool inBetween(size_t, size_t, size_t, size_t, size_t, size_t) const noexcept;
 
 public:
     Piece() {};

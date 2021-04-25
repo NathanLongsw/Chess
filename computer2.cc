@@ -28,9 +28,7 @@ void Computer2::playCapture() {
             }
         }
     }
-    //now have vector of all enemy locations, for all my pieces
-    // try capture an enemy
-
+    // now have vector of all enemy locations, for all my pieces, try capture an enemy
     for (const auto &v : pieces) {
         for (const auto &p : v) { 
             if (p->getColour() == colour) {

@@ -12,7 +12,7 @@ class TextDisplay : public Observer<Info, State> {
 public:
     TextDisplay(); // Constructor, empty square
     void notify(Subject<Info, State> &whoNotified) override; // reacts notifications
-    friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td) const noexcept;
+    friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
 };
 
 #endif

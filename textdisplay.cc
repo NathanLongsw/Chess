@@ -72,7 +72,7 @@ void TextDisplay::notify( Subject<Info, State> & whoNotified) {
   }
 }
 
-ostream & operator<<(ostream &out, const TextDisplay &td) const noexcept {
+ostream & operator<<(ostream &out, const TextDisplay &td) {
     int R = 8;
     for (auto it = td.theDisplay.end() - 1; it >= td.theDisplay.begin(); --it) {
         out << R << " ";

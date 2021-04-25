@@ -10,7 +10,7 @@ void Piece::setPiece(Rank t, Colour colour, size_t r, size_t c) {
     moves = generateMoves();
 }
 
-bool inBetween(size_t row, size_t col, size_t fromRow, size_t fromCol, size_t toRow, size_t toCol) const noexcept {
+bool Piece::inBetween(size_t row, size_t col, size_t fromRow, size_t fromCol, size_t toRow, size_t toCol) const noexcept {
     bool hor = ((row < toRow && row > fromRow) || (row > toRow && row < fromRow));
 
     bool ver = ((col < toCol && col > fromCol) || (col > toCol && col < fromCol));

@@ -6,7 +6,6 @@
 #include <utility>
 #include <memory>
 #include <map>
-#include "player.h"
 #include "human.h"
 #include "computer1.h"
 #include "computer2.h"

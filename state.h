@@ -26,10 +26,12 @@ enum class Rank { p, r, n, b, k, q, blank };
 struct State {
     StateType type; 
     Colour colour;
-    Rank rank;
 
     // Position of the Piece
     size_t row, col;
+    
+    Rank rank;
+
 };
 
 #endif

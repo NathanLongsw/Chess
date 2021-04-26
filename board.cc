@@ -1,6 +1,4 @@
 #include "board.h"
-#include "textdisplay.h"
-#include "graphicsdisplay.h"
 #include "blank.h"
 #include "rook.h"
 #include "pawn.h"
@@ -12,7 +10,21 @@ using namespace std;
 
 Board::Board(bool graphics): graphics{graphics} {}
 
-// Begins a move
+void Board::init() {
+	pieces.clear();
+	moves.clear();
+	td = make_shared<TextDisplay>();
+    if (graphics) gd = make_shared<GraphicsDisplay>();
+	for (size_t i = 0; i < 8; i++) {
+		vector<shared_ptr<Piece>> row;
+		for (size_t j = 0; j < 8; j++) {
+			row.emplace_back(make_shared<Blank>(i, j));
+		}
+		pieces.push_back(row);
+	}
+	attachPieces();
+}
+
 void Board::play(Colour colour) {
     try {
         colour == Colour::White ? white->play() : black->play();
@@ -27,7 +39,6 @@ void Board::play(Colour colour) {
     }
 }
 
-// Initializes players
 void Board::initPlayers(unsigned seed) {
     string whitePlayer, blackPlayer;
 	cin >> whitePlayer >> blackPlayer;
@@ -61,7 +72,6 @@ void Board::initPlayers(unsigned seed) {
 	throw InvalidPlayer{};
 }
 
-// Attaches pieces to initialize observer design pattern
 void Board::attachPieces(const int n) {
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < n; ++j) {
@@ -76,7 +86,6 @@ void Board::attachPieces(const int n) {
 	}
 }
 
-// Detaches pieces
 void Board::detachPiece(Piece *p) {
 	int i = p->getRow();
 	int j = p->getCol();
@@ -92,7 +101,6 @@ void Board::detachPiece(Piece *p) {
 	}
 }
 
-// Initializes observer design pattern
 void Board::attach(Piece *p) {
 	int i = p->getRow();
 	int j = p->getCol();
@@ -108,23 +116,6 @@ void Board::attach(Piece *p) {
 	}
 }
 
-// Sets up the board.  Clears old board, if necessary.
-void Board::init() {
-	pieces.clear();
-	moves.clear();
-	td = make_shared<TextDisplay>();
-    if (graphics) gd = make_shared<GraphicsDisplay>();
-	for (size_t i = 0; i < 8; i++) {
-		vector<shared_ptr<Piece>> row;
-		for (size_t j = 0; j < 8; j++) {
-			row.emplace_back(make_shared<Blank>(i, j));
-		}
-		pieces.push_back(row);
-	}
-	attachPieces();
-}
-
-// Places piece at row r, col c.
 void Board::setPiece(size_t r, size_t c, Rank rank, Colour colour) {
 	if ((r > 7 || r < 0) || (c > 7 || c < 0) ||
 		(rank == Rank::blank && pieces[r][c]->getInfo().rank == Rank::blank))
@@ -154,7 +145,6 @@ void Board::setPiece(size_t r, size_t c, Rank rank, Colour colour) {
 	pieces[r][c]->setPiece(rank, colour, r, c);
 }
 
-// Determines if checkmate has occurred
 bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour) {
 	Colour myColour = atColour == Colour::White ? Colour::Black : Colour::White;
 	size_t kRow = myColour == Colour::White ? wRow : bRow;
@@ -264,7 +254,6 @@ bool Board::inCheckmate(size_t atRow, size_t atCol, Rank atRank, Colour atColour
 	return true;
 }
 
-// Determines if colour has any legal moves
 bool Board::inStalemate(Colour colour) {
 	if(colour == Colour::White && wCheck) return false;
 	if(colour == Colour::Black && bCheck) return false;
@@ -379,7 +368,6 @@ bool Board::inStalemate(Colour colour) {
     return true;
 }
 
-// Moves piece at fromRow-1, fromCol-'a' to toRow-1, toCol-'a'
 void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour colour) {
 	if ((fromRow > 8 || fromRow < 1) || (toRow > 8 || toRow < 1) ||
 		((fromCol - 'a') > 7 || (fromCol - 'a' < 0)) || ((toCol - 'a') > 7 || (toCol - 'a' < 0)))
@@ -577,7 +565,6 @@ void Board::move(char fromCol, size_t fromRow, char toCol, size_t toRow, Colour 
 	}
 }
 
-// Undo last move
 void Board::undo(Colour colour, bool staleMate) {
 	if (moves.empty()) throw UndoException{};
 	PlayerMove lastMove = moves.back();
@@ -694,12 +681,10 @@ void Board::undo(Colour colour, bool staleMate) {
 	}
 }
 
-// Returns copy of the board
 vector<vector<shared_ptr<Piece>>> Board::getPieces() const noexcept {
 	return pieces;
 }
 
-// Determines if the user can leave set up mode
 bool Board::canLeaveSetup() const {
 	bool whiteKing = false, blackKing = false;
 	for (int i = 0; i < 8; ++i) {
@@ -732,7 +717,6 @@ bool Board::canLeaveSetup() const {
 	return true;
 }
 
-// Prints a history of moves
 void Board::printHistory() const {
 	if (moves.empty()) throw UndoException{};
 	char type;
@@ -776,7 +760,6 @@ void Board::printHistory() const {
     }
 }
 
-// Outputs Board
 ostream &operator<<(ostream &out, const Board &b) {
 	if (b.td != nullptr)
 		out << *b.td;

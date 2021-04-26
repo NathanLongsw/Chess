@@ -8,15 +8,19 @@ class Board;
 
 /* Pure virtual class used for strategy design pattern */
 
-enum class PlayerType {Human, C1, C2, C3, C4 };
-
 class Player {
   protected:
+    // The player's colour
     Colour colour;
+
+    // Pointer to the chess board
     Board* gameboard;
+
   public:
     Player(Board *Board, Colour colour);
     virtual ~Player();
+
+    // Pure virtual method used to play a move
     virtual void play() = 0;
 };
 

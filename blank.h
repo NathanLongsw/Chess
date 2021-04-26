@@ -6,6 +6,7 @@
 
 class Blank : public Piece {
     std::vector<std::pair<int, int>> moves;
+    
   public:
     Blank(size_t r, size_t c);
     void move(size_t r, size_t c) override;

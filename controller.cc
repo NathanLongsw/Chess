@@ -3,11 +3,10 @@ using namespace std;
 
 Controller::Controller(bool graphics): b{make_shared<Board>(graphics)} {}
 
-// Initializes board
 void Controller::init() {
     b->init();
 }
-// Initializes board, set default starting piece layout and set players
+
 void Controller::startGame(unsigned seed) {
     init();
     b->setPiece(0, 0, Rank::r, Colour::White);
@@ -34,7 +33,6 @@ void Controller::startGame(unsigned seed) {
     initPlayers(seed);
 }
 
-// Initializes players
 void Controller::initPlayers(unsigned seed) {
     try {
         b->initPlayers(seed);
@@ -45,7 +43,6 @@ void Controller::initPlayers(unsigned seed) {
     }
 }
 
-// Call player's move method 
 void Controller::move(Colour colour) {
     try {
         b->play(colour);
@@ -72,7 +69,6 @@ void Controller::move(Colour colour) {
     }
 }
 
-// Resigns game
 void Controller::resign(Colour colour) noexcept {
     if (colour == Colour::White) {
         cout << "Black";
@@ -84,7 +80,6 @@ void Controller::resign(Colour colour) noexcept {
     cout << " wins!" << endl;
 }
 
-// Called when checkmate occurs
 void Controller::checkmate(Colour colour) noexcept {
     cout << "Checkmate! ";
     if (colour == Colour::Black) {
@@ -97,14 +92,12 @@ void Controller::checkmate(Colour colour) noexcept {
     cout << " wins!" << endl;
 }
 
-// Draws game
 void Controller::draw() noexcept {
      cout << "Stalemate!" << endl;
      whiteScore += 0.5; 
      blackScore += 0.5;
 }
 
-// Executes set up mode
 void Controller::setup(Colour &colour) {
     while (true) {
         string op;
@@ -172,7 +165,6 @@ void Controller::setup(Colour &colour) {
     }
 }
 
-// Undo last move 
 void Controller::undo(Colour colour) {
     try {
         // Get colour of who played the last move
@@ -184,13 +176,11 @@ void Controller::undo(Colour colour) {
     }
 }
 
-// Game over output
 void Controller::gameOver() const noexcept {
     cout << "Final Score:" << endl;
     cout << "White: " << whiteScore << endl << "Black: " << blackScore << endl;
 }
 
-// Print history of moves
 void Controller::printHistory() const {
     try {
         b->printHistory();

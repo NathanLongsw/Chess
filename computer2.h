@@ -1,15 +1,15 @@
 #ifndef COMPUTER2_H
 #define COMPUTER2_H
-#include <stdlib.h>
 #include "computer1.h"
 
 /* Derived class which inhertis from Computer1 */
 
-class Board;
-
 class Computer2: public Computer1 {
-protected:
+protected: 
+    // Returns the colour of the opposing Player
     Colour getEnemyColour() const noexcept;
+
+    // Attemps to play a capturing move
     void playCapture();
 public:
     Computer2(Board* gameboard, Colour colour, unsigned);

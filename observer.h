@@ -12,4 +12,5 @@ public:
     
     virtual ~Observer() = default;
 };
+
 #endif

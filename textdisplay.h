@@ -8,12 +8,21 @@
 
 class TextDisplay : public Observer<Info, State> {
     std::vector<std::vector<char>> theDisplay;
-    char squareChar(int row, int col) const noexcept; // returns appropariate char for black or white square
-    char getIcon(Colour colour, Rank rank) const noexcept; // returns appropriate char icon for peice of specific colour
+
+    // Returns appropariate char for black or white square
+    char squareChar(int row, int col) const noexcept;
+
+    // Returns appropriate char icon for peice of specific colour
+    char getIcon(Colour colour, Rank rank) const noexcept; 
 
 public:
-    TextDisplay(); // Constructor, empty square
-    void notify(Subject<Info, State> &whoNotified) override; // reacts notifications
+    // Constructs a board of empty squares
+    TextDisplay();
+
+    // Reacts to changes in Piece position 
+    void notify(Subject<Info, State> &whoNotified) override;
+
+    // Prints display
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
 };
 

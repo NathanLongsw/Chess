@@ -3,8 +3,8 @@
 #include <stddef.h>
 
 /* State types are:
-    NewPiece -- I am a new piece.  I was just placed on the board.  I'm letting
-                you know that I exist, and to remove yourself if you were in my square.
+    NewPiece -- I am a new piece. I was just placed on the board. I'm letting
+                you know that I exist.
 
     Castling -- Specific state for king when castling
 
@@ -17,18 +17,19 @@
 
 enum class StateType { NewPiece, Castling, Moving, Standing, Check};
 
-// Used to store the colour of a piece
+// Used to store the colour of a Piece
 enum class Colour { NoColour, Black, White };
 
-// Used to store the rank (type) of a piece
+// Used to store the rank (type) of a Piece
 enum class Rank { p, r, n, b, k, q, blank };
 
 struct State {
     StateType type; 
-    Colour colour; 
-    size_t row;
-    size_t col;
+    Colour colour;
     Rank rank;
+
+    // Position of the Piece
+    size_t row, col;
 };
 
 #endif

@@ -5,6 +5,7 @@
 /* Derived class which inhertis from Computer2 */
 
 class Computer3: public Computer2 {
+    // Determines if position row, col is at risk of being captured
     bool positionatRisk(int row, int col) noexcept;
 
 public:

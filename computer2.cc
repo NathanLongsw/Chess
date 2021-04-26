@@ -56,7 +56,7 @@ void Computer2::playCapture() {
     playRandom();
 }
 
-void Computer2::play(){
+void Computer2::play() {
     pieces = gameboard->getPieces();
     playCapture();
 }

@@ -1,75 +1,145 @@
-# chess
+# Chess
 
-Note:
-To run on command without graphics use ./chess -text
-
-To set the seed use ./chess -seed xxx 
-
-This Python project will read and parse data in the SelectR format.
-
-## About SelectR
-
-The Standard Electronic Client Transaction Reporting System (SelectR) data format is a structure for various dealers in securities across Canada to provide information on individuals and trades to securities regulator authorities and regulation services providers.
-
-The SE1 data consists of all accounts (client and proprietary) which traded in a particular stock or security within a requested date range. Currently, Staff request and receive the SE1 data from three commercial data service providers, who in turn, maintain it for the back office operations of their respective dealer member customers. The requests for SE1 data are facilitated through a dedicated encrypted portal. All requests must contain the specific security identifier (namely the stock symbol and CUSIP) and the date range.
-The SE1 data records the particulars of accounts which bought and sold the particular security as well as the trade terms, the date, the volume and the price. It also contains certain account particulars such as account number, full name and contact information (such as phone number and address) for the account holder, alternate delivery and mailing addresses, if applicable, the dealer member branch at which the account is held and the registered representative’s name and code.
+This project is a C++ implementation of game of Chess using OOP.
 
 
-## Installation
+## About Chess
 
-Execute the following terminal command in the same directory that the .whl file is stored in:
+Chess is played on an 8x8 checkerboard, arranged so that there is a white square at the bottom right. Players take turns making one move at a time. The player controlling the white pieces makes the first move. There are six types of pieces:  
+* King (K) Moves one square in any direction.  
+* Queen (Q) Moves in any of the eight possible directions, any distance, but cannot move past any piece that blocks its path.  
+* Bishop (B) Moves in any of the four diagonal directions, any distance, but cannot move past any piece that blocks its path.  
+* Rook (R) Moves in any of the four vertical/horizontal directions, any distance, but cannot move past any piece that blocks its path.  
+* Knight (N) If it sits on square (x,y), it can move to square (x±2,y±1) or (x±1,y±2). Can “jump over” any piece that blocks its path.  
+* Pawn (P) Moves one square forward.  
+A piece captures another piece by moving onto the square occupied by that piece. The captured piece is then permanently removed from the board. A piece that could capture another piece is said to attack that piece. A piece may only capture a piece of the opposite colour.
+The objective of the game is to place your opponent’s king under attack, such that your op- ponent’s king cannot escape in one move. This is known as checkmate. An attack on the king, whether it can escape or not, is known as check.
+The following additional rules govern the movement of pieces:
+* The pawn is the only piece whose standard move is different from its capturing move. A pawn moves only forward, but it captures on the forward diagonals (one square). Thus, on capturing, a pawn must move diagonally forward, one square, to take over a square occupied by another piece.
+* A pawn, on its first move, may move either one square forward or two squares forward.
+* If a pawn, by moving two squares forward, avoids capture by another pawn (i.e, if moving one square forward would have put it under attack by another pawn), the would-be attacking pawn may still capture it by moving one square diagonally forward to the square the other pawn skipped over. This is known as pawn capture en passant. This option is only available immediately following the two-square move by the opposing pawn. If you wait, you can’t do it.
+* A pawn, upon reaching the other end of the board is replaced by either a rook, knight, bishop, or queen (the player is free to choose).
+* A move known as castling helps to move the king to a safer square while simultaneously mobilizing a rook. To execute it, the king moves two squares towards one of the rooks, and that rook then occupies the square “skipped over” by the king. This happens in one move. For castling to be legal, the king and rook used must not previously have moved in the game; there must be no pieces between the king and rook used; and the king must not be in check on either its starting position, its final position, or the position in between (to be occupied by the rook).
+* It is not legal to make any move that puts your king in check.
+* If any player ever has no legal moves available, but is not in check, it is known as stalemate, and the game is a draw.
 
-`pip install OSC_SelectR-{version_number}-py3-none-any.whl`
+## Implementation Details
 
-Replace {version_number} with the actual version number of the file you have.
+My implementation of this game employs the Observer design pattern. Each cell of the grid is an observer of all of its neighbours
+(that means that class Cell is its own observer). Thus, when the grid calls notifyNeighbours on a given cell, that cell then calls the notify method on each of its neighbours (each cell is told who its neighbours are when the grid is initialized). Moreover, the TextDisplay class is an observer of every cell (this is also set up when the grid is initialized).
 
-E.g.
+In order to construct a complete solution using this design pattern, I was required to specify the types of notifcations a cell can send. A notification can either be a notification of a new piece, a relay of that new piece message, or a reply to that new piece being found. A cell that receives a new piece notifies its observers (adjacent cells) that it has received a new piece of a certain colour. The cells notified of a new piece by their neighbour relays that message along the line. When a message is received by a cell that contains the same colour piece as the new piece, it replies back in a similar fashion. Hence, when a piece matching the colour of the new piece is reached, the message stops relaying and instead replies back. Similarly if there are no pieces in a cell to relay a message then it should stop. Since the observer pattern doesn’t distinguish what observers are in the collection the cell receiving a new piece can’t send out specific information about the direction of each line to its appropriate neighbours. However, when a neighbour receives a notification of a new piece they check the information passed along and determine what direction they are from the original piece, and relay that information along. For more information on these messages see the state.h file.
 
-`pip install OSC_SelectR-0.1.1-py3-none-any.whl`
 
-## Usage
+## Valid Commands
 
-You may instantiate a `SelectR` object with the Python command:
+* `new n` : Creates a new n × n grid, where n ≥ 4 ∧ n ≡ 0(mod2). If there was already an active grid,that grid is destroyed and replaced with the new one. When setting up the new grid the program intializes the middle 4 squares following the Black-White-Black-White pattern.
 
-```
-from selectr import SelectR
-foo = SelectR()
-```
+* `play r c` : Within a game, plays a piece at row r, column c of the colour corresponding to the player who’s move it is. If the row and column entered correspond to a cell that already has a piece, or a position outside the grid, then the input is ignored and nothing is done.
 
-4 methods are exposed when instantiated without the `folder` argument:
+## Output
 
-1. get_files(folder)
+When the game is over, if the black player wins the program displays "Black wins!" and if the white player wins it displays "White wins!"; otherwise it displays "Tie!". If input was exhausted before the game was won or lost, it displays nothing.
 
-	Description: This method consumes a string argument "folder" that represents the path to the folder containing the .SE1 files to be processed.
-		     If no .SE1 files are found in the folder, an assertion is triggered indicating to the user that no .SE1 files were found. If at least 1 .SE1 file was found in the folder, this method returns a list of the .SE1 file(s) in the folder.
-		     NOTE: If a folder is instantiated in the object initialization, the user can call self.files instead of self.get_files(folder).
+A sample output from a game is provided below. Italicized text is input.
 
-2. parse(file)
 
-	Description: This method consumes a string argument "file" that represents the name of the .SE1 to be parsed.
-		     This method returns a list of dictionaries organized by the section of the data which is one of: "BASIC-CLIENT", "SECURITY-IDENTIFICATION" and "TRADE". 
 
-3. combine(list_)
+*new 8*
+<div>
+--------<br/>
+--------<br/>
+--------<br/>
+---BW---<br/>
+---WB---<br/>
+--------<br/>
+--------<br/>
+--------<br/>
+</div>
+  
+*play 3 5*
+<div>
+--------<br/>
+--------<br/>
+--------<br/>
+---BBB--<br/>
+---WB---<br/>
+--------<br/>
+--------<br/>
+--------<br/>
+</div>  
 
-	Description: This method consumes a list argument "list_" that represents a list of dictionaries. "list_" is expected to be the same ouput from the self.parse(file) function.
-		     This method returns a list of three dataframes, one for each of the following sections: "BASIC-CLIENT", "SECURITY-IDENTIFICATION" and "TRADE". 
+*play 3 6*
+<div>
+--------<br/> 
+--------<br/> 
+--------<br/> 
+---BBBW-<br/> 
+---WB---<br/> 
+--------<br/> 
+--------<br/> 
+--------<br/> 
+</div>  
 
-4. to_df(SE1_files, num_of_processes)
+*play 3 2*
+<div>
+--------<br/> 
+--------<br/> 
+--------<br/> 
+--BBBBW-<br/> 
+---WB---<br/> 
+--------<br/> 
+--------<br/> 
+--------<br/> 
+</div>  
 
-	Description: This method consumes a list argument "SE1_files" that represents a list of strings which are the names of the .SE1 files that are to be processed and cleaned. It also consumes a natural number "num_of_processes" that represents the number of parallel processes the user would like to execute. NOTE: The number of process used should not exceed the number of CPUs your machine has.
-		     This method returns a list of three dataframes, one for each of the following sections: "BASIC-CLIENT", "SECURITY-IDENTIFICATION" and "TRADE". 
-		     NOTE: If a folder is instantiated in the object initialization, the user can call self.df instead of self.to_df(self.get_files(folder)).
+*play 2 3*
+<div>
+--------<br/> 
+--------<br/> 
+---W----<br/> 
+--BWBBW-<br/> 
+---WB---<br/> 
+--------<br/> 
+--------<br/> 
+--------<br/> 
+</div>
 
-Alternatively, you may also instantiate a `SelectR` object with a `folder` argument:
+*play 0 0*
+<div>
+B-------<br/> 
+--------<br/> 
+---W----<br/> 
+--BWBBW-<br/> 
+---WB---<br/> 
+--------<br/> 
+--------<br/> 
+--------<br/> 
+</div>
 
-```
-bar = SelectR("./path/to/.se1_files")
-```
+*play 3 1*
+<div>
+B-------<br/> 
+--------<br/> 
+---W----<br/> 
+-WWWBBW-<br/> 
+---WB---<br/> 
+--------<br/> 
+--------<br/> 
+--------<br/> 
+</div>
 
-Doing so will expose 3 additional data objects:
+*play 7 7*
+<div>
+B-------<br/> 
+--------<br/> 
+---W----<br/> 
+-WWWBBW-<br/> 
+---WB---<br/> 
+--------<br/> 
+--------<br/> 
+-------B<br/>
+</div>
 
-1. folder - confirms the folder
-2. files - a list of detected .SE1 files
-3. df - a list of parsed data frames from the .SE1 files
-
+*ˆD*
 

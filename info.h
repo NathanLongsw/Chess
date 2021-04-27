@@ -3,6 +3,9 @@
 #include <cstddef>
 #include "state.h"
 
+/*  Struct to store information regarding the position, colour and rank (type)
+    of a Piece.  */   
+
 struct Info {
     size_t row, col;
     Colour colour;

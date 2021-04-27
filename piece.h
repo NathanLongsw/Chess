@@ -7,7 +7,8 @@
 #include "state.h"
 #include "subject.h"
 
-/* Derived class which inhertis from Subject and Observer */
+/*  Derived class which inhertis from Subject and Observer. Pieces of chess
+    board are derived from this class.  */
 
 class Piece : public Subject<Info, State>, public Observer<Info, State> {
     size_t row, col;
@@ -58,10 +59,10 @@ public:
     Colour &getColour() noexcept;
 };
 
-// Class to indicate invalid moves
+/*  Class thrown if an invalid move occurs. */
 class InvalidMoveException {};
 
-// Class to indicate checks
+/*  Class thrown if a check occurs. */
 class checkException {
     Colour colour;
     size_t row, col;

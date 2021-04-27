@@ -17,10 +17,8 @@
 
 template <typename InfoType, typename StateType> class Observer;
 
-class UndoException {};
-class staleMateException {};
-class checkMateException {};
-class InvalidPlayer {};
+/*  This class handles the collection of pieces on the board, the 
+    players and the displays.  */
 
 class Board {
     // The actual board
@@ -105,3 +103,15 @@ public:
 };
 
 #endif
+
+/*  Class thrown if an invalid undo is encountered. */
+class UndoException {};
+
+/*  Class thrown if a stalemate occurs. */
+class staleMateException {};
+
+/*  Class thrown if a checkmate occurs. */
+class checkMateException {};
+
+/*  Class thrown if an invalid player initialization occurs. */
+class InvalidPlayer {};

@@ -6,7 +6,8 @@
 
 class Board;
 
-/* Derived class which inhertis from Player */
+/*  Derived class which inhertis from Player. Plays random
+    moves. */
 
 class Computer1: public Player {
 protected:

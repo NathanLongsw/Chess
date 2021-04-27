@@ -5,6 +5,10 @@
 #include <string>
 #include "board.h"
 
+/*  This class controls the logic of the program. In addition to making 
+    main.cc cleaner, it also hides the implementation of the program from 
+    the client.  */
+
 class Controller {
     // Pointer to the Board
     std::shared_ptr<Board> b;

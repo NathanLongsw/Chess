@@ -3,6 +3,9 @@
 #include <vector>
 #include <algorithm>
 
+/*  Base class which enables the Observer design pattern. Subjects
+    in the context of this program are the Pieces of the chess board.  */
+
 /* A note on InfoType and StateType:
 
    We have separated the collection of fields into two parts:  its Info
@@ -22,6 +25,7 @@ class Observer;
 
 template <typename InfoType, typename StateType>
 class Subject {
+    // Vector of Observers
     std::vector<Observer<InfoType, StateType> *> observers;
     StateType state;
 

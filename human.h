@@ -2,7 +2,8 @@
 #define HUMAN_H
 #include "player.h"
 
-/* Derived class which inhertis from Player */
+/*  Derived class which inhertis from Player. Reads from 
+    stdin to perform moves.  */
 
 class Board;
 

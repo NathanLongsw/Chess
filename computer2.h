@@ -2,7 +2,8 @@
 #define COMPUTER2_H
 #include "computer1.h"
 
-/* Derived class which inhertis from Computer1 */
+/*  Derived class which inhertis from Computer1. Prioritizes capturing
+    moves. If no pieces to capture, plays like Computer1.  */
 
 class Computer2: public Computer1 {
 protected: 

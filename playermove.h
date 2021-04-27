@@ -3,6 +3,9 @@
 #include <memory>
 #include "state.h"
 
+/*  This class is used to store the necessary information for printing 
+    and undoing a move. Class Board has a vector of PlayerMoves.  */
+
 // Struct to store Piece position
 struct Position {
     char col;

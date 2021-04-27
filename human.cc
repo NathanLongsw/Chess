@@ -15,7 +15,7 @@ void Human::play() {
         cin >> fromx >> fromy >> newx >> newy;
         if (cin.fail()) {
             if (cin.eof()) {
-                return ;
+                return;
             } else {
                 cin.clear();
                 cin.ignore();

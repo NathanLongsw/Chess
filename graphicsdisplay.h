@@ -6,7 +6,8 @@
 #include "window.h"
 #include "piece.h"
 
-/* Derived class which inhertis from Observer */
+/* This class is class derived from the class Observer. It is used to store 
+   the graphical display of the chess board. */
 
 class Xwindow;
 

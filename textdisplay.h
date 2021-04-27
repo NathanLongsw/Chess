@@ -4,7 +4,8 @@
 #include <vector>
 #include "piece.h"
 
-/* Derived class which inhertis from Observer */
+/* This class is class derived from the class Observer. It is used to store 
+   the text display of the chess board. */
 
 class TextDisplay : public Observer<Info, State> {
     std::vector<std::vector<char>> theDisplay;

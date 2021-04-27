@@ -4,6 +4,9 @@
 #include <memory>
 #include <vector>
 
+/*  Base class which enables the Strategy design pattern. Types of
+    Players used in this program are humans and computers.  */
+
 class Board;
 
 /* Pure virtual class used for strategy design pattern */

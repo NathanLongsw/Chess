@@ -2,6 +2,9 @@
 #define STATE_H
 #include <stddef.h>
 
+/*  Struct to store information regarding the StateType, the colour, the position
+    and the rank (type) of the notifying Piece  */
+
 /* State types are:
     NewPiece -- I am a new piece. I was just placed on the board. I'm letting
                 you know that I exist.
@@ -24,14 +27,15 @@ enum class Colour { NoColour, Black, White };
 enum class Rank { p, r, n, b, k, q, blank };
 
 struct State {
-    StateType type; 
+    // See above
+    StateType type;
+
     Colour colour;
 
     // Position of the Piece
     size_t row, col;
     
     Rank rank;
-
 };
 
 #endif

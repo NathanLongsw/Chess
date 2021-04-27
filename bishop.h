@@ -2,7 +2,7 @@
 #define BISHOP_H
 #include "piece.h"
 
-/* Derived class which inhertis from Piece */
+/* Derived class which inhertis from Piece. */
 
 class Bishop : public Piece {
   public:

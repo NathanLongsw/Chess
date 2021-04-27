@@ -4,6 +4,10 @@
 template <typename InfoType, typename StateType>
 class Subject;
 
+/*  Abstract base class which enables the Observer design pattern. Observers
+    in the context of this program are the Pieces of the chess board and the 
+    displays.  */
+
 template <typename InfoType, typename StateType>
 class Observer {
 public:

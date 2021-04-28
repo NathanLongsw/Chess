@@ -86,7 +86,7 @@ A sample text output from a short game is provided below. Italicized text is inp
 <div>
 8 rnbqkbnr<br/>
 7 pppppppp<br/>
-6  - - - -<br/>
+6  /- /- /- /-<br/>
 5 - - - - <br/>
 4  - - - -<br/>
 3 - - - - <br/>

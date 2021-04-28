@@ -83,10 +83,10 @@ A sample text output from a short game is provided below. Italicized text is inp
 *./chess -text*  
 
 *game human human*  
-8 rnbqkbnr<br/>
-7 pppppppp<br/>
-6  - - - -<br/>
-5 - - - - <br/>
+8 rnbqkbnr  
+7 pppppppp  
+6  \- \- \- \-  
+5 - - - -   
 4  - - - -<br/>
 3 - - - - <br/>
 2 PPPPPPPP<br/>

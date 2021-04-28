@@ -31,9 +31,11 @@ My implementation of this game employs the Observer design pattern. Each piece i
 
 Additionally, this program utilizes the Strategy design pattern for the class Player. The Player is a base class with derived classes Human, Computer 1-3. The virtual method `play` is what invokes the design pattern; Humans get their moves from stdin and computers get their moves either from RNG (random number generation) or from a certain strategy (to be discussed later).
 
+This program uses two structures to relay information, `struct Info` and `struct State`. Info is for the parts of a piece inherent to what it is: its position, its colour and its rank (type). State is for the parts of the piece that, when changed, trigger notifications. This is the information that the Observer "gets" when it calls getState on the subject. It comprises the type of state, rank, position, and a colour. A state is one of five types: `NewPiece` which indicates a piece has just been placed, Castling which is a specific state for the king during a castle, Moving which indicates that a piece is requesting to move to a position, Standing which is the default state of a piece and Check which determines if a piece is putting the king in check.
+
 ### Displays
 
-As mentioned above, provided to the user are text and graphical displays of the chess board. In this display, capital letters denote white pieces, and lower case letters denote black pieces. Unoccupied squares are denoted by a blank space for white squares, and an underscore character for dark squares. The above board also represents the initial configuration of the game.
+As mentioned above, provided to the user are text and graphical displays of the chess board. In this display, capital letters denote white pieces, and lower-case letters denote black pieces. Unoccupied squares are denoted by a blank space for white squares, and an underscore character for dark squares. The above board also represents the initial configuration of the game.
 
 After every move, the board is be redisplayed. If one player or the other is in check, additionally display White is in check. or Black is in check., as appropriate. If one player has won the game, display Checkmate! White wins! or Checkmate! Black wins! If the game is stalemated, output Stalemate! If the game is resigned, output White wins! or Black wins!, as appropriate.
 
@@ -57,7 +59,7 @@ Black: 1
 
 * `game white-player black-player` starts a new game. The parameters white-player and black-player can be either human or computer[1-3].  
 * `resign` concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a game.  
-* `move start end` A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For example: move e2 e4. Castling would specified by the two- square move for the king: move e1 g1 or move e1 c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7 e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a move.   
+* `move start end` A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For example: move e2 e4. Castling would be specified by the two-square move for the king: move e1 g1 or move e1 c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7 e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a move.   
 * `undo` undoes the last move played. If there are no moves to undo a warning is displayed to the client.
 * `history char` prints a history of the moves. When char equals 'a' the moves are printed in algebraic notation and 'd' displays the moves in descriptive notation.  
 * `setup` enters setup mode, within which you can set up your own initial board configurations. This can only be done when a game is not currently running. Within setup mode, the following language is used:  

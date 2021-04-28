@@ -82,8 +82,7 @@ A sample text output from a short game is provided below. Italicized text is inp
 
 *./chess -text*  
 
-*game human human*
-<div>
+*game human human*  
 8 rnbqkbnr<br/>
 7 pppppppp<br/>
 6  - - - -<br/>
@@ -94,7 +93,6 @@ A sample text output from a short game is provided below. Italicized text is inp
 1 RNBQKBNR<br/>
   
   abcdefgh<br/>
-</div>
   
 *move e2 e4*
 <div>

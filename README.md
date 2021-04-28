@@ -82,7 +82,7 @@ A sample text output from a short game is provided below. Italicized text is inp
 
 *./chess -text*  
 
-*game human human*  
+*game human human* 
 8 rnbqkbnr  
 7 pppppppp  
 6  - - - -  
@@ -95,7 +95,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
   
 *move e2 e4*
-
 8 rnbqkbnr  
 7 pppppppp  
 6  - - - -  
@@ -108,7 +107,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
 
 *move a7 a6*
-
 8 rnbqkbnr  
 7 -ppppppp  
 6 p- - - -  
@@ -121,7 +119,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
 
 *move d1 f3*
-
 8 rnbqkbnr  
 7 -ppppppp  
 6 p- - - -  
@@ -134,7 +131,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
 
 *move a6 a5*
-
 8 rnbqkbnr  
 7 -ppppppp  
 6  - - - -  
@@ -147,7 +143,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
 
 *move f1 c4*
-
 8 rnbqkbnr  
 7 -ppppppp  
 6  - - - -  
@@ -160,7 +155,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
 
 *move a5 a4*
-
 8 rnbqkbnr  
 7 -ppppppp  
 6  - - - -  
@@ -173,7 +167,6 @@ A sample text output from a short game is provided below. Italicized text is inp
   abcdefgh  
 
 *move f3 f7*
-
 8 rnbqkbnr  
 7 -ppppQpp  
 6  - - - -  

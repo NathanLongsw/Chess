@@ -26,17 +26,53 @@ The following additional rules govern the movement of pieces:
 
 ## Implementation Details
 
-My implementation of this game employs the Observer design pattern. Each cell of the grid is an observer of all of its neighbours
-(that means that class Cell is its own observer). Thus, when the grid calls notifyNeighbours on a given cell, that cell then calls the notify method on each of its neighbours (each cell is told who its neighbours are when the grid is initialized). Moreover, the TextDisplay class is an observer of every cell (this is also set up when the grid is initialized).
+My implementation of this game employs the Observer design pattern. Each piece is an observer of all of its neighbours
+(that means that class Piece is its own observer). Thus, when the board calls notifyNeighbours on a given cell, that piece then calls the notify method on each of its neighbours (each piece is told who its neighbours are when the board is initialized). Moreover, the TextDisplay and GraphicsDisplay classes are observers of every piece (this is also set up when the board is initialized).
 
-In order to construct a complete solution using this design pattern, I was required to specify the types of notifcations a cell can send. A notification can either be a notification of a new piece, a relay of that new piece message, or a reply to that new piece being found. A cell that receives a new piece notifies its observers (adjacent cells) that it has received a new piece of a certain colour. The cells notified of a new piece by their neighbour relays that message along the line. When a message is received by a cell that contains the same colour piece as the new piece, it replies back in a similar fashion. Hence, when a piece matching the colour of the new piece is reached, the message stops relaying and instead replies back. Similarly if there are no pieces in a cell to relay a message then it should stop. Since the observer pattern doesn’t distinguish what observers are in the collection the cell receiving a new piece can’t send out specific information about the direction of each line to its appropriate neighbours. However, when a neighbour receives a notification of a new piece they check the information passed along and determine what direction they are from the original piece, and relay that information along. For more information on these messages see the state.h file.
+Additionally, this program utilizes the Strategy design pattern for the class Player. The Player is a base class with derived classes Human, Computer 1-3. The virtual method `play` is what invokes the design pattern; Humans get their moves from stdin and computers get their moves either from RNG (random number generation) or from a certain strategy (to be discussed later).
 
+### Displays
+
+As mentioned above, provided to the user are text and graphical displays of the chess board. In this display, capital letters denote white pieces, and lower case letters denote black pieces. Unoccupied squares are denoted by a blank space for white squares, and an underscore character for dark squares. The above board also represents the initial configuration of the game.
+
+After every move, the board is be redisplayed. If one player or the other is in check, additionally display White is in check. or Black is in check., as appropriate. If one player has won the game, display Checkmate! White wins! or Checkmate! Black wins! If the game is stalemated, output Stalemate! If the game is resigned, output White wins! or Black wins!, as appropriate.
+
+### Players
+
+This program accommodates both human and computer players. In particular, human vs. human, human vs. computer, and computer vs. computer are all be possible. Computer players operate at one of three difficulty levels:  
+
+* Level 1: random legal moves.  
+* Level 2: prefers capturing moves and checks over other moves.  
+* Level 3: prefers avoiding capture, capturing moves, and checks.  
+
+### Scoring
+
+A win awards one point to the winner and zero points to the loser. A draw awards half a point to each team. When the program ends (Ctrl-D is pressed), it should print the final score to the screen. For example:  
+
+Final Score:  
+White: 2  
+Black: 1  
 
 ## Valid Commands
 
-* `new n` : Creates a new n × n grid, where n ≥ 4 ∧ n ≡ 0(mod2). If there was already an active grid,that grid is destroyed and replaced with the new one. When setting up the new grid the program intializes the middle 4 squares following the Black-White-Black-White pattern.
+* `game white-player black-player` starts a new game. The parameters white-player and black-player can be either human or computer[1-3].  
+* `resign` concedes the game to your opponent. This is the only way, outside of winning or drawing the game, to end a game.  
+* `move start end` A move consists of the command move, followed by the starting and ending coordinates of the piece to be moved. For example: move e2 e4. Castling would specified by the two- square move for the king: move e1 g1 or move e1 c1 for white. Pawn promotion would additionally specify the piece type to which the pawn is promoted: move e7 e8 Q. In the case of a computer player, the command move (without arguments) makes the computer player make a move.   
+* `undo` undoes the last move played. If there are no moves to undo a warning is displayed to the client.
+* `history char` prints a history of the moves. When char equals 'a' the moves are printed in algebraic notation and 'd' displays the moves in descriptive notation.  
+* `setup` enters setup mode, within which you can set up your own initial board configurations. This can only be done when a game is not currently running. Within setup mode, the following language is used:  
+  * + K e1 places the piece K (i.e., white king in this case) on the square e1. If a piece is already on that square, it is replaced. The board should be redisplayed.  
+  * - e1 removes the piece from the square e1 and then redisplays the board. If there is no piece at that square, take no action.
+  * = colour makes it colour’s turn to go next. – done leaves setup mode.  
+Upon completion of setup mode, you must verify that the board contains exactly one white king and exactly one black king; that no pawns are on the first or last row of the board; and that neither king is in check. The user cannot leave setup mode until these conditions are satisfied.  
 
-* `play r c` : Within a game, plays a piece at row r, column c of the colour corresponding to the player who’s move it is. If the row and column entered correspond to a cell that already has a piece, or a position outside the grid, then the input is ignored and nothing is done.
+### Command-line Interface
+
+This program supports the following options on the command line:  
+* `-text` runs the program in text-only mode. No graphics are displayed. The default behaviour
+(no -text) is to show both text and graphics.  
+* `-seed xxx` sets the random number generator’s seed to xxx. This is good for testing, but not
+much fun. If you don’t set the seed, the program should use a different one each time.  
 
 ## Output
 

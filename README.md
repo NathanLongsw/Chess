@@ -78,107 +78,124 @@ much fun. If you don’t set the seed, the program should use a different one ea
 
 ## Output
 
-When the game is over, if the black player wins the program displays "Black wins!" and if the white player wins it displays "White wins!"; otherwise it displays "Tie!". If input was exhausted before the game was won or lost, it displays nothing.
+A sample text output from a short game is provided below. Italicized text is input.
 
-A sample output from a game is provided below. Italicized text is input.
+*./chess -text*  
 
-
-
-*new 8*
+*game human human*
 <div>
---------<br/>
---------<br/>
---------<br/>
----BW---<br/>
----WB---<br/>
---------<br/>
---------<br/>
---------<br/>
+8 rnbqkbnr<br/>
+7 pppppppp<br/>
+6  - - - -<br/>
+5 - - - - <br/>
+4  - - - -<br/>
+3 - - - - <br/>
+2 PPPPPPPP<br/>
+1 RNBQKBNR<br/>
+  
+  abcdefgh<br/>
 </div>
   
-*play 3 5*
+*move e2 e4*
 <div>
---------<br/>
---------<br/>
---------<br/>
----BBB--<br/>
----WB---<br/>
---------<br/>
---------<br/>
---------<br/>
+8 rnbqkbnr<br/>
+7 pppppppp<br/>
+6  - - - -<br/>
+5 - - - - <br/>
+4  - -P- -<br/>
+3 - - - - <br/>
+2 PPPP PPP<br/>
+1 RNBQKBNR<br/>
+  
+  abcdefgh<br/>
 </div>  
 
-*play 3 6*
+*move a7 a6*
 <div>
---------<br/> 
---------<br/> 
---------<br/> 
----BBBW-<br/> 
----WB---<br/> 
---------<br/> 
---------<br/> 
---------<br/> 
+8 rnbqkbnr<br/>
+7 -ppppppp<br/>
+6 p- - - -<br/>
+5 - - - - <br/>
+4  - -P- -<br/>
+3 - - - - <br/>
+2 PPPP PPP<br/>
+1 RNBQKBNR<br/>
+  
+  abcdefgh<br/>
 </div>  
 
-*play 3 2*
+*move d1 f3*
 <div>
---------<br/> 
---------<br/> 
---------<br/> 
---BBBBW-<br/> 
----WB---<br/> 
---------<br/> 
---------<br/> 
---------<br/> 
+8 rnbqkbnr<br/>
+7 -ppppppp<br/>
+6 p- - - -<br/>
+5 - - - - <br/>
+4  - -P- -<br/>
+3 - - -Q- <br/>
+2 PPPP PPP<br/>
+1 RNB KBNR<br/>
+  
+  abcdefgh<br/>
 </div>  
 
-*play 2 3*
+*move a6 a5*
 <div>
---------<br/> 
---------<br/> 
----W----<br/> 
---BWBBW-<br/> 
----WB---<br/> 
---------<br/> 
---------<br/> 
---------<br/> 
+8 rnbqkbnr<br/>
+7 -ppppppp<br/>
+6  - - - -<br/>
+5 p - - - <br/>
+4  - -P- -<br/>
+3 - - -Q- <br/>
+2 PPPP PPP<br/>
+1 RNB KBNR<br/>
+  
+  abcdefgh<br/>
 </div>
 
-*play 0 0*
+*move f1 c4*
 <div>
-B-------<br/> 
---------<br/> 
----W----<br/> 
---BWBBW-<br/> 
----WB---<br/> 
---------<br/> 
---------<br/> 
---------<br/> 
+8 rnbqkbnr<br/>
+7 -ppppppp<br/>
+6  - - - -<br/>
+5 p - - - <br/>
+4  -B-P- -<br/>
+3 - - -Q- <br/>
+2 PPPP PPP<br/>
+1 RNB K NR<br/>
+  
+  abcdefgh<br/>
 </div>
 
-*play 3 1*
+*move a5 a4*
 <div>
-B-------<br/> 
---------<br/> 
----W----<br/> 
--WWWBBW-<br/> 
----WB---<br/> 
---------<br/> 
---------<br/> 
---------<br/> 
+8 rnbqkbnr<br/>
+7 -ppppppp<br/>
+6  - - - -<br/>
+5 - - - - <br/>
+4 p-B-P- -<br/>
+3 - - -Q- <br/>
+2 PPPP PPP<br/>
+1 RNB K NR<br/>
+  
+  abcdefgh<br/>
 </div>
 
-*play 7 7*
+*move f3 f7*
 <div>
-B-------<br/> 
---------<br/> 
----W----<br/> 
--WWWBBW-<br/> 
----WB---<br/> 
---------<br/> 
---------<br/> 
--------B<br/>
+8 rnbqkbnr<br/>
+7 -ppppQpp<br/>
+6  - - - -<br/>
+5 - - - - <br/>
+4 p-B-P- -<br/>
+3 - - - - <br/>
+2 PPPP PPP<br/>
+1 RNB K NR<br/>
+  
+  abcdefgh<br/>
 </div>
 
-*ˆD*
+Checkmate! White wins!  
+Final Score:  
+White: 1  
+Black: 0  
 

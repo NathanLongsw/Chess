@@ -85,112 +85,105 @@ A sample text output from a short game is provided below. Italicized text is inp
 *game human human*  
 8 rnbqkbnr  
 7 pppppppp  
-6  \- \- \- \-  
+6  - - - -  
 5 - - - -   
-4  - - - -<br/>
-3 - - - - <br/>
-2 PPPPPPPP<br/>
-1 RNBQKBNR<br/>
+4  - - - -  
+3 - - - -   
+2 PPPPPPPP  
+1 RNBQKBNR  
   
-  abcdefgh<br/>
+  abcdefgh  
   
 *move e2 e4*
-<div>
-8 rnbqkbnr<br/>
-7 pppppppp<br/>
-6  - - - -<br/>
-5 - - - - <br/>
-4  - -P- -<br/>
-3 - - - - <br/>
-2 PPPP PPP<br/>
-1 RNBQKBNR<br/>
+
+8 rnbqkbnr  
+7 pppppppp  
+6  - - - -  
+5 - - - -   
+4  - -P- -  
+3 - - - -   
+2 PPPP PPP  
+1 RNBQKBNR  
   
-  abcdefgh<br/>
-</div>  
+  abcdefgh  
 
 *move a7 a6*
-<div>
-8 rnbqkbnr<br/>
-7 -ppppppp<br/>
-6 p- - - -<br/>
-5 - - - - <br/>
-4  - -P- -<br/>
-3 - - - - <br/>
-2 PPPP PPP<br/>
-1 RNBQKBNR<br/>
+
+8 rnbqkbnr  
+7 -ppppppp  
+6 p- - - -  
+5 - - - -   
+4  - -P- -  
+3 - - - -   
+2 PPPP PPP  
+1 RNBQKBNR  
   
-  abcdefgh<br/>
-</div>  
+  abcdefgh  
 
 *move d1 f3*
-<div>
-8 rnbqkbnr<br/>
-7 -ppppppp<br/>
-6 p- - - -<br/>
-5 - - - - <br/>
-4  - -P- -<br/>
-3 - - -Q- <br/>
-2 PPPP PPP<br/>
-1 RNB KBNR<br/>
+
+8 rnbqkbnr  
+7 -ppppppp  
+6 p- - - -  
+5 - - - -   
+4  - -P- -  
+3 - - -Q-   
+2 PPPP PPP  
+1 RNB KBNR  
   
-  abcdefgh<br/>
-</div>  
+  abcdefgh  
 
 *move a6 a5*
-<div>
-8 rnbqkbnr<br/>
-7 -ppppppp<br/>
-6  - - - -<br/>
-5 p - - - <br/>
-4  - -P- -<br/>
-3 - - -Q- <br/>
-2 PPPP PPP<br/>
-1 RNB KBNR<br/>
+
+8 rnbqkbnr  
+7 -ppppppp  
+6  - - - -  
+5 p - - -   
+4  - -P- -  
+3 - - -Q-   
+2 PPPP PPP  
+1 RNB KBNR  
   
-  abcdefgh<br/>
-</div>
+  abcdefgh  
 
 *move f1 c4*
-<div>
-8 rnbqkbnr<br/>
-7 -ppppppp<br/>
-6  - - - -<br/>
-5 p - - - <br/>
-4  -B-P- -<br/>
-3 - - -Q- <br/>
-2 PPPP PPP<br/>
-1 RNB K NR<br/>
+
+8 rnbqkbnr  
+7 -ppppppp  
+6  - - - -  
+5 p - - -   
+4  -B-P- -  
+3 - - -Q-   
+2 PPPP PPP  
+1 RNB K NR  
   
-  abcdefgh<br/>
-</div>
+  abcdefgh  
 
 *move a5 a4*
-<div>
-8 rnbqkbnr<br/>
-7 -ppppppp<br/>
-6  - - - -<br/>
-5 - - - - <br/>
-4 p-B-P- -<br/>
-3 - - -Q- <br/>
-2 PPPP PPP<br/>
-1 RNB K NR<br/>
+
+8 rnbqkbnr  
+7 -ppppppp  
+6  - - - -  
+5 - - - -   
+4 p-B-P- -  
+3 - - -Q-   
+2 PPPP PPP  
+1 RNB K NR  
   
-  abcdefgh<br/>
-</div>
+  abcdefgh  
 
 *move f3 f7*
-<div>
-8 rnbqkbnr<br/>
-7 -ppppQpp<br/>
-6  - - - -<br/>
-5 - - - - <br/>
-4 p-B-P- -<br/>
-3 - - - - <br/>
-2 PPPP PPP<br/>
-1 RNB K NR<br/>
+
+8 rnbqkbnr  
+7 -ppppQpp  
+6  - - - -  
+5 - - - -   
+4 p-B-P- -  
+3 - - - -   
+2 PPPP PPP  
+1 RNB K NR  
   
-  abcdefgh<br/>
-</div>
+  abcdefgh  
 
 Checkmate! White wins!  
 Final Score:  
